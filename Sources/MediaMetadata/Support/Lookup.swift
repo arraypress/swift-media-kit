@@ -2,7 +2,7 @@
 //  Lookup.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  EXIF stores settings as small integers and the SDK names only the keys, not
 //  what the numbers mean — so the tables live here, taken from the EXIF

@@ -2,7 +2,7 @@
 //  FieldCatalogue.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  The table behind ``MetadataField``. One row per field, so a label, a
 //  category, a value shape and a cost are declared in exactly one place and

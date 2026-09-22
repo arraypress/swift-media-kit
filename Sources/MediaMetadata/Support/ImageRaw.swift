@@ -2,7 +2,7 @@
 //  ImageRaw.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Every property ImageIO returns, namespaced and typed, with nothing dropped.
 //

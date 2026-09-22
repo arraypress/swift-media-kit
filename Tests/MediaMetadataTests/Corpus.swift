@@ -2,7 +2,7 @@
 //  Corpus.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  A corpus of real files in real formats, generated rather than committed.
 //

@@ -2,7 +2,7 @@
 //  MediaRaw.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Every metadata item AVFoundation will hand over, from every key space the
 //  file actually carries.

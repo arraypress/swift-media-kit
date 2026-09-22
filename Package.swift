@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -18,7 +18,8 @@ let package = Package(
             name: "MediaMetadata",
             dependencies: [
                 .product(name: "CodecKit", package: "swift-codec-kit"),
-            ]
+            ],
+            swiftSettings: [.swiftLanguageMode(.v6)]
         ),
         .testTarget(name: "MediaMetadataTests", dependencies: ["MediaMetadata"]),
     ]

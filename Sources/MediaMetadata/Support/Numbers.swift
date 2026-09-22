@@ -2,7 +2,7 @@
 //  Numbers.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Reading a number out of a Core Foundation dictionary without caring which
 //  numeric type the format happened to use.

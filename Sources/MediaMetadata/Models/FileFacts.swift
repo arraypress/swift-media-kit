@@ -2,7 +2,7 @@
 //  FileFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Everything read about one file, in one pass.
 //

@@ -2,7 +2,7 @@
 //  CatalogueTests.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  The field catalogue is what a column chooser, a `--help` listing and a
 //  table renderer all read, so its integrity is worth asserting rather than

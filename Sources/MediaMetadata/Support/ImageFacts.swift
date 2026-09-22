@@ -2,7 +2,7 @@
 //  ImageFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Everything ImageIO knows, in one open.
 //
@@ -27,14 +27,24 @@ public enum ImageFacts {
     ) {
         // Caching the decoded image would be pointless — nothing here looks at
         // a pixel, only at the headers in front of them.
-        let options = [kCGImageSourceShouldCache: false] as CFDictionary
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, options),
-              let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
-        else { return }
-
         func put(_ field: MetadataField, _ value: FieldValue?) {
             guard wanted.contains(field), let value, !value.isEmpty else { return }
             values[field] = value
+        }
+
+        let options = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, options),
+              let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
+        else {
+            // ImageIO does not read SVG. Its size is in the file's own words: the root
+            // element's width and height, else its viewBox — read from the first 8 KB.
+            if url.pathExtension.lowercased() == "svg", let (width, height) = svgSize(url) {
+                put(.width, .integer(width))
+                put(.height, .integer(height))
+                put(.dimensions, .text("\(width)x\(height)"))
+                put(.orientation, .text(width > height ? "Landscape" : (height > width ? "Portrait" : "Square")))
+            }
+            return
         }
 
         let exif = properties[kCGImagePropertyExifDictionary] as? [CFString: Any] ?? [:]
@@ -90,6 +100,32 @@ public enum ImageFacts {
         if let dpi = Numbers.double(properties[kCGImagePropertyDPIWidth]), dpi > 0 {
             put(.dpi, .integer(Int(dpi.rounded())))
         }
+    }
+
+    // MARK: - SVG
+
+    /// The SVG's declared size: `width="…" height="…"` on the root (a `px` suffix allowed,
+    /// any other unit is not a pixel count and is skipped), else the viewBox's extent.
+    static func svgSize(_ url: URL) -> (Int, Int)? {
+        guard let handle = try? FileHandle(forReadingFrom: url),
+              let data = try? handle.read(upToCount: 8192),
+              let head = String(data: data, encoding: .utf8) else { return nil }
+        func attribute(_ name: String) -> Double? {
+            guard let re = try? NSRegularExpression(pattern: "\\b\(name)=\"([0-9.]+)(px)?\""),
+                  let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
+                  let r = Range(m.range(at: 1), in: head) else { return nil }
+            return Double(head[r])
+        }
+        if let w = attribute("width"), let h = attribute("height"), w > 0, h > 0 {
+            return (Int(w.rounded()), Int(h.rounded()))
+        }
+        if let re = try? NSRegularExpression(pattern: "viewBox=\"\\s*[-0-9.]+[\\s,]+[-0-9.]+[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)"),
+           let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
+           let rw = Range(m.range(at: 1), in: head), let rh = Range(m.range(at: 2), in: head),
+           let w = Double(head[rw]), let h = Double(head[rh]), w > 0, h > 0 {
+            return (Int(w.rounded()), Int(h.rounded()))
+        }
+        return nil
     }
 
     // MARK: - Camera

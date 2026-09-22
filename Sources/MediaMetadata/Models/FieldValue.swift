@@ -2,7 +2,7 @@
 //  FieldValue.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Values stay typed all the way to the renderer.
 //

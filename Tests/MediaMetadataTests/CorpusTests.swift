@@ -2,7 +2,7 @@
 //  CorpusTests.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Pointed at every format this machine can produce, rather than at the two or
 //  three a developer thinks of.

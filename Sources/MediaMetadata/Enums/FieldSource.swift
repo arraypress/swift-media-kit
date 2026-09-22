@@ -2,7 +2,7 @@
 //  FieldSource.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  What has to be opened to answer a field — which is the whole performance
 //  story of this package.

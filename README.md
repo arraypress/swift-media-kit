@@ -197,6 +197,8 @@ macOS 14+ / iOS 17+ / tvOS 17+ / visionOS 1+, Swift 6. One dependency,
 [swift-codec-kit](https://github.com/arraypress/swift-codec-kit), for the
 streamed digests — a multi-gigabyte video never has to fit in memory.
 
+An SVG's width and height come from its own attributes or viewBox, since ImageIO does not open one.
+
 PDF fields need PDFKit and are absent where it is not available. Finder tags,
 comments and download origins are macOS only. Nothing here touches the network,
 including for place names: coordinates stay coordinates, and the offline answer

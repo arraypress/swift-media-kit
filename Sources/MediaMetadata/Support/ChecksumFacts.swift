@@ -2,7 +2,7 @@
 //  ChecksumFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 
 import CodecKit

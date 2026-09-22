@@ -2,7 +2,7 @@
 //  ImageMetadataTests.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 2026.
+//  Created by David Sherlock on 9/15/26.
 //
 //  Written with known values, read back, compared. Anything that disagrees is
 //  a bug in the reader rather than a surprise in somebody's photograph.
@@ -25,6 +25,31 @@ final class ImageMetadataTests: XCTestCase {
     }
 
     // MARK: - Curated fields
+
+    /// ImageIO does not open an SVG, so its size is read from the file's own words: the
+    /// root's width and height first, the viewBox when those are missing, and nothing when
+    /// the width is in a unit that is not pixels.
+    func testSVGSizeComesFromAttributesOrViewBox() async throws {
+        let attrs = directory.appendingPathComponent("attrs.svg")
+        try #"<svg xmlns="http://www.w3.org/2000/svg" width="640px" height="360" viewBox="0 0 16 9"></svg>"#.write(to: attrs, atomically: true, encoding: .utf8)
+        let attrFacts = try await MetadataReader.read(attrs, fields: [.width, .height, .dimensions, .orientation])
+        XCTAssertEqual(attrFacts.kind, .image)
+        XCTAssertEqual(attrFacts.values[.width], .integer(640))
+        XCTAssertEqual(attrFacts.values[.height], .integer(360))
+        XCTAssertEqual(attrFacts.string(for: .dimensions), "640x360")
+        XCTAssertEqual(attrFacts.string(for: .orientation), "Landscape")
+
+        let box = directory.appendingPathComponent("box.svg")
+        try #"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0, 0, 24, 48"><rect/></svg>"#.write(to: box, atomically: true, encoding: .utf8)
+        let boxFacts = try await MetadataReader.read(box, fields: [.width, .height])
+        XCTAssertEqual(boxFacts.values[.width], .integer(24))
+        XCTAssertEqual(boxFacts.values[.height], .integer(48))
+
+        let units = directory.appendingPathComponent("units.svg")
+        try #"<svg xmlns="http://www.w3.org/2000/svg" width="10cm" height="5cm"></svg>"#.write(to: units, atomically: true, encoding: .utf8)
+        let unitFacts = try await MetadataReader.read(units, fields: [.width, .height])
+        XCTAssertNil(unitFacts.values[.width], "a width in centimetres is not a pixel count")
+    }
 
     func testEveryCameraFieldRoundTrips() async throws {
         let url = directory.appendingPathComponent("photo.jpg")
