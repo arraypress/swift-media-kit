@@ -35,13 +35,13 @@ public enum AudioTimbreError: Error, LocalizedError, Equatable, Sendable {
     public var errorDescription: String? {
         switch self {
         case .fileNotFound(let url):
-            return "No file at \(url.path)."
+            return String(localized: "No file at \(url.path).", bundle: .module, comment: "Audio analysis error; the value is a file path.")
         case .cannotDecode(let url, let underlying):
-            return "Could not decode \(url.lastPathComponent): \(underlying)"
+            return String(localized: "Could not decode \(url.lastPathComponent): \(underlying)", bundle: .module, comment: "Audio analysis error: file name, then the decoder's reason.")
         case .emptyAudio(let url):
-            return "\(url.lastPathComponent) decoded to zero frames."
+            return String(localized: "\(url.lastPathComponent) decoded to zero frames.", bundle: .module, comment: "Audio analysis error: the named audio file held no samples.")
         case .silent:
-            return "The audio is entirely silent; there is no spectrum to measure."
+            return String(localized: "The audio is entirely silent; there is no spectrum to measure.", bundle: .module, comment: "Audio analysis error.")
         case .malformedChannels(let detail):
             return "Malformed channel data: \(detail)"
         case .invalidSampleRate(let rate):
