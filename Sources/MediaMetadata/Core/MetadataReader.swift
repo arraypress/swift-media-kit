@@ -96,13 +96,9 @@ public enum MetadataReader {
 
     /// Reads the curated fields *and* every raw key the system frameworks hold.
     ///
-    /// This is the exhaustive read: 676 image property constants, 294 media
-    /// identifiers and 127 resource keys are what the SDK declares, and a file
-    /// may carry keys outside all of them — maker notes especially. Nothing is
-    /// filtered, so whatever the frameworks return is in ``FileFacts/raw``.
-    ///
+    /// Nothing is filtered, so keys outside the SDK's declared constants (maker notes
+    /// especially) still land in ``FileFacts/raw``.
     /// - Parameters:
-    ///   - url: The file to read.
     ///   - fields: Curated fields to answer alongside the raw keys.
     ///   - root: The folder a scan began at.
     public static func readEverything(

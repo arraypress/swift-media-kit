@@ -61,15 +61,8 @@ enum Corpus {
         let url: URL
     }
 
-    /// Every image type this machine can write, straight from ImageIO.
-    ///
-    /// `CGImageDestinationCopyTypeIdentifiers` is the SDK's own answer to
-    /// "what can you write", which makes the corpus track the OS rather than a
-    /// list somebody has to remember to update.
-    ///
-    /// Filtered to actual images, because the list is not all images: PDF is
-    /// in it, and a PDF written by `CGImageDestination` is a document that
-    /// happens to contain a picture.
+    /// Every image type this machine can write, straight from ImageIO, so the corpus tracks the
+    /// OS rather than a hand-kept list. Filtered to actual images: the list includes PDF.
     static var writableImageTypes: [UTType] {
         let identifiers = CGImageDestinationCopyTypeIdentifiers() as? [String] ?? []
         return identifiers

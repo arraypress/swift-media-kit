@@ -33,6 +33,7 @@ public struct FileFacts: Sendable, Equatable {
     /// this; a caller chasing a key no one has named yet reads it from here.
     public var raw: [String: FieldValue]
 
+    /// Creates facts for `url`; both maps default to empty.
     public init(
         url: URL,
         kind: MediaKind,

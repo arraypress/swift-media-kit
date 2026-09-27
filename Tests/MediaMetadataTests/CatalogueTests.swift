@@ -275,7 +275,7 @@ final class CatalogueTests: XCTestCase {
 
     /// A phone clip at 1080x1920 is 1080p vertical to everyone who handles it.
     /// Reading the height instead of the short edge calls it 1440p, which
-    /// describes a frame nobody shot — found on a real portrait video.
+    /// describes a frame nobody shot.
     func testPortraitVideoIsLabelledByItsShortEdge() {
         XCTAssertEqual(Format.resolutionLabel(width: 1080, height: 1920), "1080p")
         XCTAssertEqual(Format.resolutionLabel(width: 1920, height: 1080), "1080p")

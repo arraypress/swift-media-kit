@@ -22,9 +22,12 @@ public enum FieldValue: Sendable, Equatable, Hashable {
     case text(String)
     case integer(Int)
     case decimal(Double)
+    /// A size in bytes.
     case bytes(Int64)
     case date(Date)
+    /// A length of time in seconds.
     case duration(Double)
+    /// One signed degree of latitude or longitude.
     case coordinate(Double)
     case boolean(Bool)
     case list([String])

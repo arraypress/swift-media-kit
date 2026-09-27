@@ -18,23 +18,18 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
     case image
     case audio
     case video
+    /// A PDF.
     case document
     case folder
+    /// Anything the other kinds do not claim.
     case other
 
     /// Classifies a type identifier, falling back to the extension when the
     /// system declares no type at all.
     ///
-    /// The fallback exists because of a hole worth knowing about: macOS
-    /// declares **no UTI for Matroska**. `UTType(filenameExtension: "mkv")`
-    /// returns a dynamic type — `dyn.ah62d4rv4ge804450`, `isDeclared` false —
-    /// that conforms to nothing, so a `.mkv` classifies as `other` and a file
-    /// list calls the most common container after MP4 an unknown blob. The
-    /// same is true of `.ape`, `.wv` and `.dsf`.
-    ///
-    /// So: a *declared* type always decides, and ``undeclared`` is consulted
-    /// only when the system has nothing to say. It can never contradict the
-    /// SDK, only fill a silence.
+    /// macOS declares **no UTI for Matroska** (nor `.ape`, `.wv`, `.dsf`): the dynamic type it
+    /// returns conforms to nothing. A *declared* type always decides; ``undeclared`` is consulted
+    /// only when the system is silent, so it can never contradict the SDK.
     public init(type: UTType?, pathExtension: String = "") {
         if let type, type.isDeclared {
             if type.conforms(to: .folder) { self = .folder }
@@ -53,11 +48,8 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
         self.init(type: UTType(filenameExtension: pathExtension), pathExtension: pathExtension)
     }
 
-    /// Formats macOS declares no type for, and what they actually are.
-    ///
-    /// Deliberately short. Every entry here was checked against the system
-    /// first: if `UTType` ever starts declaring one of these, the declared
-    /// answer wins and the row becomes dead weight rather than a conflict.
+    /// Formats macOS declares no type for, and what they actually are. If `UTType` ever declares
+    /// one, the declared answer wins and the row becomes dead weight rather than a conflict.
     public static let undeclared: [String: MediaKind] = [
         "mkv": .video, "mk3d": .video, "mks": .video, "ogm": .video, "rmvb": .video, "divx": .video,
         "mka": .audio, "ape": .audio, "wv": .audio, "dsf": .audio, "dff": .audio,

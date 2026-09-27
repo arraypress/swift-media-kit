@@ -103,12 +103,14 @@ public enum DocumentFacts {
 /// PDFKit is not available on this platform, so documents contribute nothing.
 public enum DocumentFacts {
 
+    /// Adds nothing: there is no PDFKit to read with.
     public static func read(
         _ url: URL,
         wanted: Set<MetadataField>,
         into values: inout [MetadataField: FieldValue]
     ) {}
 
+    /// Always empty: there is no PDFKit to read with.
     public static func readRaw(_ url: URL) -> [String: FieldValue] { [:] }
 }
 

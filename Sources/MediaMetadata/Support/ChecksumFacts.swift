@@ -9,17 +9,10 @@
 import CodecKit
 import Foundation
 
-/// Digests of a file's bytes.
+/// Digests of a file's bytes, mapped onto `CodecKit`, which streams a megabyte at a time.
 ///
-/// The work is `CodecKit`'s — it already streams a file a megabyte at a time
-/// so a disk image never has to fit in memory, and it already knows all six
-/// algorithms. This only maps fields onto it.
-///
-/// Worth knowing before adding one of these columns to a large folder: hashing
-/// is bounded by the disk, not the processor. SHA-256 measures at roughly
-/// 1 GB/s on one core and nearly 10 GB/s across them, so a warm local folder
-/// is free and half a terabyte on a USB drive is forty minutes whatever the
-/// machine does.
+/// Hashing is bounded by the disk, not the processor (SHA-256 runs at roughly 1 GB/s per
+/// core), so a warm local folder is free and half a terabyte on a USB drive is forty minutes.
 public enum ChecksumFacts {
 
     /// The algorithm each checksum field asks for.

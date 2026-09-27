@@ -13,10 +13,8 @@ import Foundation
 /// Reads the two Finder facts that live in extended attributes rather than in
 /// resource values.
 ///
-/// Both are binary property lists hidden behind an `xattr` name. The Finder
-/// comment has no `URLResourceKey` at all, and the download origin is the most
-/// useful provenance a file carries — it says where the bytes came from, which
-/// is the question a manifest exists to answer.
+/// Both are binary property lists behind an `xattr` name: the Finder comment has no
+/// `URLResourceKey`, and the download origin says where the bytes came from.
 public enum ExtendedAttributes {
 
     /// The Finder comment, or `nil` when there is none.

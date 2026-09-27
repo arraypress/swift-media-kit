@@ -30,6 +30,7 @@ public struct FieldDescriptor: Sendable, Equatable, Hashable, Codable {
     /// What has to be opened to answer it.
     public let source: FieldSource
 
+    /// Creates a descriptor from its four facts and caller-facing key.
     public init(
         key: String,
         label: String,

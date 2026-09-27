@@ -85,11 +85,9 @@ public enum MediaRaw {
 
     /// Strips the characters that would make a key unquotable on a command line.
     ///
-    /// iTunes keys begin with a copyright sign — `©nam` — which AVFoundation
-    /// reports percent-encoded as `%A9nam`. That escape is Latin-1, not UTF-8,
-    /// so `removingPercentEncoding` returns nil for it and the sigil has to be
-    /// dropped by hand; otherwise the key reads `A9nam`, which looks like data
-    /// and is not.
+    /// iTunes keys begin with `©` (`©nam`), which AVFoundation reports as Latin-1 `%A9nam`;
+    /// `removingPercentEncoding` returns nil for that, so the escape is dropped by hand rather
+    /// than leaving a misleading `A9nam`.
     static func sanitise(_ token: String) -> String {
         let decoded = token.removingPercentEncoding
             ?? token.replacing(/%[0-9A-Fa-f]{2}/, with: "")

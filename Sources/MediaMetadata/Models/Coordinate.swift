@@ -10,10 +10,8 @@ import Foundation
 
 /// Where a file says it was made.
 ///
-/// Degrees only. Turning these into a city name is a network request to a
-/// geocoding service, which is the one thing that would stop a file list being
-/// answerable with the machine offline — so this package stops here. The
-/// photographer's own ``MetadataField/iptcCity`` is the offline answer.
+/// Degrees only: naming the place needs a network geocoder, which would stop reads working
+/// offline. The photographer's own ``MetadataField/iptcCity`` is the offline answer.
 public struct Coordinate: Sendable, Equatable, Hashable, Codable {
 
     /// Signed degrees north of the equator.
@@ -25,6 +23,7 @@ public struct Coordinate: Sendable, Equatable, Hashable, Codable {
     /// Metres above sea level, where the file records it.
     public let altitude: Double?
 
+    /// Creates a coordinate from signed degrees and optional metres of altitude.
     public init(latitude: Double, longitude: Double, altitude: Double? = nil) {
         self.latitude = latitude
         self.longitude = longitude
