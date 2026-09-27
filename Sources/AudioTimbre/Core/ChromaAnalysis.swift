@@ -109,7 +109,8 @@ public enum ChromaAnalysis {
             let magnitude = Double(magnitudes[index])
             guard magnitude >= floor else { continue }
             guard magnitude > Double(magnitudes[index - 1]),
-                  magnitude >= Double(magnitudes[index + 1]) else { continue }
+                magnitude >= Double(magnitudes[index + 1])
+            else { continue }
             let frequency = Double(index) * binWidth
             let midi = 69.0 + 12.0 * log2(frequency / 440.0)
             let nearest = midi.rounded()

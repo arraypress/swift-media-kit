@@ -22,9 +22,11 @@ public enum MediaFacts {
         into values: inout [MetadataField: FieldValue]
     ) async {
         let asset = AVURLAsset(url: url)
-        guard let (common, all, duration, tracks) = try? await asset.load(
-            .commonMetadata, .metadata, .duration, .tracks
-        ) else { return }
+        guard
+            let (common, all, duration, tracks) = try? await asset.load(
+                .commonMetadata, .metadata, .duration, .tracks
+            )
+        else { return }
 
         func put(_ field: MetadataField, _ value: FieldValue?) {
             guard wanted.contains(field), let value, !value.isEmpty else { return }
@@ -41,7 +43,8 @@ public enum MediaFacts {
         put(.hasAudio, .boolean(tracks.contains { $0.mediaType == .audio }))
 
         if let creation = try? await asset.load(.creationDate),
-           let date = try? await creation.load(.dateValue) {
+            let date = try? await creation.load(.dateValue)
+        {
             put(.captured, .date(date))
         }
 
@@ -76,29 +79,37 @@ public enum MediaFacts {
         put(.artist, await commonValue(.commonKeyArtist).map { .text($0) })
         put(.album, await commonValue(.commonKeyAlbumName).map { .text($0) })
 
-        put(.albumArtist, await value(
-            .iTunesMetadataAlbumArtist, .id3MetadataBand
-        ).map { .text($0) })
+        put(
+            .albumArtist,
+            await value(
+                .iTunesMetadataAlbumArtist, .id3MetadataBand
+            ).map { .text($0) })
 
         // Genre, track and tempo are NOT common keys and never resolve as one.
         // Asked for that way they come back empty from every file that has
         // them, which is the quietest possible bug: the column is there, the
         // data is there, and the cells are blank.
-        put(.genre, await value(
-            .iTunesMetadataUserGenre, .iTunesMetadataPredefinedGenre,
-            .id3MetadataContentType, .quickTimeMetadataGenre,
-            .quickTimeUserDataGenre
-        ).map { .text($0) })
+        put(
+            .genre,
+            await value(
+                .iTunesMetadataUserGenre, .iTunesMetadataPredefinedGenre,
+                .id3MetadataContentType, .quickTimeMetadataGenre,
+                .quickTimeUserDataGenre
+            ).map { .text($0) })
 
-        put(.bpm, await value(
-            .id3MetadataBeatsPerMinute, .iTunesMetadataBeatsPerMin
-        ).map { .text($0) })
+        put(
+            .bpm,
+            await value(
+                .id3MetadataBeatsPerMinute, .iTunesMetadataBeatsPerMin
+            ).map { .text($0) })
 
         put(.musicalKey, await value(.id3MetadataInitialKey).map { .text($0) })
 
-        put(.mediaComment, await value(
-            .id3MetadataComments, .iTunesMetadataUserComment, .quickTimeUserDataComment
-        ).map { .text($0) })
+        put(
+            .mediaComment,
+            await value(
+                .id3MetadataComments, .iTunesMetadataUserComment, .quickTimeUserDataComment
+            ).map { .text($0) })
 
         if let composer = await value(.id3MetadataComposer, .iTunesMetadataComposer) {
             put(.composer, .text(composer))
@@ -146,7 +157,8 @@ public enum MediaFacts {
         }
         for item in AVMetadataItem.metadataItems(from: items, filteredByIdentifier: id3) {
             if let string = try? await item.load(.stringValue),
-               let first = string.split(separator: "/").first, !first.isEmpty {
+                let first = string.split(separator: "/").first, !first.isEmpty
+            {
                 return String(first)
             }
         }
@@ -161,7 +173,8 @@ public enum MediaFacts {
     ) async {
         if let audio = tracks.first(where: { $0.mediaType == .audio }) {
             if let descriptions = try? await audio.load(.formatDescriptions),
-               let description = descriptions.first {
+                let description = descriptions.first
+            {
                 if let basic = CMAudioFormatDescriptionGetStreamBasicDescription(description)?.pointee {
                     if basic.mSampleRate > 0 { put(.sampleRate, .integer(Int(basic.mSampleRate))) }
                     if basic.mChannelsPerFrame > 0 { put(.channels, .integer(Int(basic.mChannelsPerFrame))) }
@@ -217,11 +230,11 @@ public enum MediaFacts {
         // still come through the raw reader.
         for identifier in [
             AVMetadataIdentifier.quickTimeMetadataLocationISO6709,
-            .quickTimeUserDataLocationISO6709
+            .quickTimeUserDataLocationISO6709,
         ] {
             for item in AVMetadataItem.metadataItems(from: items, filteredByIdentifier: identifier) {
                 guard let string = try? await item.load(.stringValue),
-                      let coordinate = ISO6709.parse(string)
+                    let coordinate = ISO6709.parse(string)
                 else { continue }
                 put(.latitude, .coordinate(coordinate.latitude))
                 put(.longitude, .coordinate(coordinate.longitude))

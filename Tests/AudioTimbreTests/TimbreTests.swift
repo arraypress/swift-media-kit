@@ -30,16 +30,19 @@ final class TimbreTests: XCTestCase {
         XCTAssertEqual(timbre.brightness, .warm)
         XCTAssertEqual(timbre.spectralCentroidHz, 845, accuracy: 120)
         XCTAssertEqual(timbre.texture, .tonal)
-        XCTAssertEqual(timbre.pitch?.name, "A4",
-                       "the fundamental, not the centroid it sits below")
+        XCTAssertEqual(
+            timbre.pitch?.name, "A4",
+            "the fundamental, not the centroid it sits below")
 
         XCTAssertLessThan(timbre.attackMs ?? 999, 20)
         XCTAssertEqual(timbre.decayMs ?? 0, TestSignals.decayMs(tau: 0.15), accuracy: 60)
     }
 
     func testAnalysesAHatLikeOneShotAsAiryNoisyAndUnpitched() throws {
-        let hat = zip(TestSignals.whiteNoise(seconds: 0.12, seed: 9),
-                      0..<Int(0.12 * TestSignals.sampleRate)).map { sample, i -> Float in
+        let hat = zip(
+            TestSignals.whiteNoise(seconds: 0.12, seed: 9),
+            0..<Int(0.12 * TestSignals.sampleRate)
+        ).map { sample, i -> Float in
             sample * Float(exp(-Double(i) / (0.01 * TestSignals.sampleRate)))
         }
         let timbre = try analyze([hat])
@@ -81,8 +84,9 @@ final class TimbreTests: XCTestCase {
 
     func testEveryWordShipsBesideItsNumber() throws {
         let timbre = try analyze([TestSignals.sine(hz: 1000, seconds: 1)])
-        XCTAssertEqual(timbre.brightness, Brightness.of(centroidHz: timbre.spectralCentroidHz),
-                       "the word must be derivable from the number it travels with")
+        XCTAssertEqual(
+            timbre.brightness, Brightness.of(centroidHz: timbre.spectralCentroidHz),
+            "the word must be derivable from the number it travels with")
         XCTAssertEqual(timbre.texture, Texture.of(flatness: timbre.spectralFlatness))
     }
 
@@ -109,8 +113,9 @@ final class TimbreTests: XCTestCase {
         // Commas separate clauses here; what must never appear is a comma INSIDE a number,
         // which is what a locale-formatted float would produce and what would break any
         // caller parsing the line back.
-        XCTAssertNil(summary.range(of: #"\d,\d"#, options: .regularExpression),
-                     "numbers must not be locale-formatted")
+        XCTAssertNil(
+            summary.range(of: #"\d,\d"#, options: .regularExpression),
+            "numbers must not be locale-formatted")
     }
 
     func testSummaryExplainsAnAbsenceRatherThanOmittingIt() throws {
@@ -124,8 +129,10 @@ final class TimbreTests: XCTestCase {
     }
 
     func testRoundTripsThroughJSON() throws {
-        let original = try analyze([TestSignals.sine(hz: 440, seconds: 0.5),
-                                    TestSignals.sine(hz: 440, seconds: 0.5)])
+        let original = try analyze([
+            TestSignals.sine(hz: 440, seconds: 0.5),
+            TestSignals.sine(hz: 440, seconds: 0.5),
+        ])
         let data = try JSONEncoder().encode(original)
         let decoded = try JSONDecoder().decode(Timbre.self, from: data)
         XCTAssertEqual(original, decoded)

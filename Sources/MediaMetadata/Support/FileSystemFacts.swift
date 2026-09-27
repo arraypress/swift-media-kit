@@ -22,10 +22,10 @@ public enum FileSystemFacts {
             .nameKey, .fileSizeKey, .totalFileAllocatedSizeKey, .contentTypeKey,
             .localizedTypeDescriptionKey, .creationDateKey, .contentModificationDateKey,
             .contentAccessDateKey, .addedToDirectoryDateKey, .isDirectoryKey,
-            .fileResourceTypeKey
+            .fileResourceTypeKey,
         ]
         #if os(macOS)
-        keys.insert(.tagNamesKey)
+            keys.insert(.tagNamesKey)
         #endif
         return keys
     }
@@ -56,9 +56,11 @@ public enum FileSystemFacts {
         put(.ext, .text(url.pathExtension.lowercased()))
         put(.path, .text(url.path))
         put(.folder, .text(url.deletingLastPathComponent().lastPathComponent))
-        put(.parentFolder, .text(
-            url.deletingLastPathComponent().deletingLastPathComponent().lastPathComponent
-        ))
+        put(
+            .parentFolder,
+            .text(
+                url.deletingLastPathComponent().deletingLastPathComponent().lastPathComponent
+            ))
         if let root {
             put(.relativePath, .text(RelativePath.of(url, from: root)))
         }
@@ -89,18 +91,18 @@ public enum FileSystemFacts {
 
         // The macOS-only extras
         #if os(macOS)
-        if let tags = resources?.tagNames, !tags.isEmpty {
-            put(.tags, .list(tags))
-        }
-        if wanted.contains(.owner), let owner = owner(of: url) {
-            put(.owner, .text(owner))
-        }
-        if wanted.contains(.finderComment), let comment = ExtendedAttributes.finderComment(of: url) {
-            put(.finderComment, .text(comment))
-        }
-        if wanted.contains(.whereFrom), let origin = ExtendedAttributes.whereFrom(of: url) {
-            put(.whereFrom, .text(origin))
-        }
+            if let tags = resources?.tagNames, !tags.isEmpty {
+                put(.tags, .list(tags))
+            }
+            if wanted.contains(.owner), let owner = owner(of: url) {
+                put(.owner, .text(owner))
+            }
+            if wanted.contains(.finderComment), let comment = ExtendedAttributes.finderComment(of: url) {
+                put(.finderComment, .text(comment))
+            }
+            if wanted.contains(.whereFrom), let origin = ExtendedAttributes.whereFrom(of: url) {
+                put(.whereFrom, .text(origin))
+            }
         #endif
     }
 

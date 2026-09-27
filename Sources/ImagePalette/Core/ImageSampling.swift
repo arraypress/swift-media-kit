@@ -23,8 +23,14 @@ public enum ImageSamplingError: Error, CustomStringConvertible, Sendable {
     /// The message for people.
     public var description: String {
         switch self {
-        case .unreadable(let url): return String(localized: "\(url.path) is not an image ImageIO can read", bundle: .module, comment: "Image palette error; the value is a file path. ImageIO is the Apple framework name.")
-        case .noPixels: return String(localized: "the image has no opaque pixels to sample", bundle: .module, comment: "Image palette error: every pixel is transparent, so no colours can be taken from it.")
+        case .unreadable(let url):
+            return String(
+                localized: "\(url.path) is not an image ImageIO can read", bundle: .module,
+                comment: "Image palette error; the value is a file path. ImageIO is the Apple framework name.")
+        case .noPixels:
+            return String(
+                localized: "the image has no opaque pixels to sample", bundle: .module,
+                comment: "Image palette error: every pixel is transparent, so no colours can be taken from it.")
         }
     }
 }
@@ -43,12 +49,13 @@ public enum ImageSampling {
             throw ImageSamplingError.unreadable(url)
         }
         if let maxSide {
-            let thumb = [
-                kCGImageSourceCreateThumbnailFromImageAlways: true,
-                kCGImageSourceCreateThumbnailWithTransform: true,
-                kCGImageSourceShouldCacheImmediately: true,
-                kCGImageSourceThumbnailMaxPixelSize: maxSide,
-            ] as CFDictionary
+            let thumb =
+                [
+                    kCGImageSourceCreateThumbnailFromImageAlways: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true,
+                    kCGImageSourceShouldCacheImmediately: true,
+                    kCGImageSourceThumbnailMaxPixelSize: maxSide,
+                ] as CFDictionary
             if let image = CGImageSourceCreateThumbnailAtIndex(source, 0, thumb) { return image }
         }
         guard let image = CGImageSourceCreateImageAtIndex(source, 0, options) else {
@@ -66,9 +73,12 @@ public enum ImageSampling {
         let height = max(1, Int((Double(image.height) * scale).rounded()))
         var data = [UInt8](repeating: 0, count: width * height * 4)
         let drawn = data.withUnsafeMutableBytes { buffer -> Bool in
-            guard let context = CGContext(data: buffer.baseAddress, width: width, height: height, bitsPerComponent: 8,
-                                          bytesPerRow: width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                                          bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return false }
+            guard
+                let context = CGContext(
+                    data: buffer.baseAddress, width: width, height: height, bitsPerComponent: 8,
+                    bytesPerRow: width * 4, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                    bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+            else { return false }
             context.interpolationQuality = .high
             context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
             return true

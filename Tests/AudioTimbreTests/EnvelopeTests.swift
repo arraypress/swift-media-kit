@@ -82,8 +82,9 @@ final class EnvelopeTests: XCTestCase {
             let shape = measure(TestSignals.decayingSine(hz: 440, tau: tau, onset: 0.05, seconds: 3))
             let expected = TestSignals.decayMs(tau: tau)
             XCTAssertNotNil(shape.decayMs, "tau \(tau) must reach -60 dB inside 3 s")
-            XCTAssertEqual(shape.decayMs!, expected, accuracy: expected * 0.05,
-                           "tau \(tau) should decay in \(expected) ms")
+            XCTAssertEqual(
+                shape.decayMs!, expected, accuracy: expected * 0.05,
+                "tau \(tau) should decay in \(expected) ms")
         }
     }
 

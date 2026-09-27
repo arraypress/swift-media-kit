@@ -60,8 +60,11 @@ enum SampleStream {
             guard let block = CMSampleBufferGetDataBuffer(sample) else { continue }
             var length = 0
             var pointer: UnsafeMutablePointer<Int8>?
-            guard CMBlockBufferGetDataPointer(block, atOffset: 0, lengthAtOffsetOut: nil, totalLengthOut: &length, dataPointerOut: &pointer) == kCMBlockBufferNoErr,
-                  let base = pointer else { continue }
+            guard
+                CMBlockBufferGetDataPointer(block, atOffset: 0, lengthAtOffsetOut: nil, totalLengthOut: &length, dataPointerOut: &pointer)
+                    == kCMBlockBufferNoErr,
+                let base = pointer
+            else { continue }
             let count = length / 2
             base.withMemoryRebound(to: Int16.self, capacity: count) { sink($0, count) }
         }

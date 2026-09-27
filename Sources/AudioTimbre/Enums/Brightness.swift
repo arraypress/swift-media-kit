@@ -35,10 +35,10 @@ public enum Brightness: String, Codable, CaseIterable, Sendable {
     /// The bucket for a spectral centroid in Hz.
     public static func of(centroidHz: Double) -> Brightness {
         switch centroidHz {
-        case ..<500:  return .dark
+        case ..<500: return .dark
         case ..<2000: return .warm
         case ..<6000: return .bright
-        default:      return .airy
+        default: return .airy
         }
     }
 }

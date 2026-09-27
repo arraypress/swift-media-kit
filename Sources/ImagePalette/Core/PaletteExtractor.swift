@@ -100,9 +100,10 @@ public enum PaletteExtractor {
                 for j in (i + 1)..<clusters.count where clusters[i].centre.distance(to: clusters[j].centre) < options.mergeDistance {
                     let a = clusters[i], b = clusters[j]
                     let total = Double(a.count + b.count)
-                    let centre = OKLab(l: (a.centre.l * Double(a.count) + b.centre.l * Double(b.count)) / total,
-                                       a: (a.centre.a * Double(a.count) + b.centre.a * Double(b.count)) / total,
-                                       b: (a.centre.b * Double(a.count) + b.centre.b * Double(b.count)) / total)
+                    let centre = OKLab(
+                        l: (a.centre.l * Double(a.count) + b.centre.l * Double(b.count)) / total,
+                        a: (a.centre.a * Double(a.count) + b.centre.a * Double(b.count)) / total,
+                        b: (a.centre.b * Double(a.count) + b.centre.b * Double(b.count)) / total)
                     clusters[i] = (centre, a.count + b.count)
                     clusters.remove(at: j)
                     merged = true
@@ -124,7 +125,8 @@ public enum PaletteExtractor {
             survivors[nearest].count += dropped.count
         }
 
-        return survivors
+        return
+            survivors
             .sorted { $0.count > $1.count }
             .map { cluster in
                 let rgb = cluster.centre.rgb
@@ -138,9 +140,10 @@ public enum PaletteExtractor {
     /// far — from a fixed-seed generator.
     static func seedCentres(_ samples: [OKLab], k: Int, seed: UInt64) -> [OKLab] {
         var rng = SplitMix(seed: seed)
-        let mean = OKLab(l: samples.reduce(0) { $0 + $1.l } / Double(samples.count),
-                         a: samples.reduce(0) { $0 + $1.a } / Double(samples.count),
-                         b: samples.reduce(0) { $0 + $1.b } / Double(samples.count))
+        let mean = OKLab(
+            l: samples.reduce(0) { $0 + $1.l } / Double(samples.count),
+            a: samples.reduce(0) { $0 + $1.a } / Double(samples.count),
+            b: samples.reduce(0) { $0 + $1.b } / Double(samples.count))
         var centres = [samples.min { $0.distance(to: mean) < $1.distance(to: mean) }!]
         var d2 = samples.map { $0.distance(to: centres[0]) }.map { $0 * $0 }
         while centres.count < k {
@@ -158,6 +161,5 @@ public enum PaletteExtractor {
         }
         return centres
     }
-
 
 }

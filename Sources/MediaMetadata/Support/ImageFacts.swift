@@ -35,7 +35,7 @@ public enum ImageFacts {
 
         let options = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let source = CGImageSourceCreateWithURL(url as CFURL, options),
-              let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
+            let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
         else {
             // ImageIO does not read SVG. Its size is in the file's own words: the root
             // element's width and height, else its viewBox — read from the first 8 KB.
@@ -67,14 +67,15 @@ public enum ImageFacts {
         put: (MetadataField, FieldValue?) -> Void
     ) {
         guard var width = Numbers.int(properties[kCGImagePropertyPixelWidth]),
-              var height = Numbers.int(properties[kCGImagePropertyPixelHeight])
+            var height = Numbers.int(properties[kCGImagePropertyPixelHeight])
         else { return putRemainingGeometry(properties, put: put) }
 
         // A camera held sideways writes the sensor's own dimensions and an
         // orientation flag saying to turn them. Reporting 6000x4000 for a
         // picture every viewer shows as 4000x6000 is wrong in the only way
         // that matters, so the flag is honoured here.
-        let rotation = Numbers.int(properties[kCGImagePropertyOrientation])
+        let rotation =
+            Numbers.int(properties[kCGImagePropertyOrientation])
             ?? Numbers.int(tiff[kCGImagePropertyTIFFOrientation])
             ?? 1
         if (5...8).contains(rotation) { swap(&width, &height) }
@@ -83,9 +84,11 @@ public enum ImageFacts {
         put(.height, .integer(height))
         put(.dimensions, .text("\(width)x\(height)"))
         put(.megapixels, .decimal((Double(width * height) / 1_000_000 * 10).rounded() / 10))
-        put(.orientation, .text(
-            width > height ? "Landscape" : (height > width ? "Portrait" : "Square")
-        ))
+        put(
+            .orientation,
+            .text(
+                width > height ? "Landscape" : (height > width ? "Portrait" : "Square")
+            ))
 
         putRemainingGeometry(properties, put: put)
     }
@@ -109,21 +112,24 @@ public enum ImageFacts {
     /// any other unit is not a pixel count and is skipped), else the viewBox's extent.
     static func svgSize(_ url: URL) -> (Int, Int)? {
         guard let handle = try? FileHandle(forReadingFrom: url),
-              let data = try? handle.read(upToCount: 8192),
-              let head = String(data: data, encoding: .utf8) else { return nil }
+            let data = try? handle.read(upToCount: 8192),
+            let head = String(data: data, encoding: .utf8)
+        else { return nil }
         func attribute(_ name: String) -> Double? {
             guard let re = try? NSRegularExpression(pattern: "\\b\(name)=\"([0-9.]+)(px)?\""),
-                  let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
-                  let r = Range(m.range(at: 1), in: head) else { return nil }
+                let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
+                let r = Range(m.range(at: 1), in: head)
+            else { return nil }
             return Double(head[r])
         }
         if let w = attribute("width"), let h = attribute("height"), w > 0, h > 0 {
             return (Int(w.rounded()), Int(h.rounded()))
         }
         if let re = try? NSRegularExpression(pattern: "viewBox=\"\\s*[-0-9.]+[\\s,]+[-0-9.]+[\\s,]+([0-9.]+)[\\s,]+([0-9.]+)"),
-           let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
-           let rw = Range(m.range(at: 1), in: head), let rh = Range(m.range(at: 2), in: head),
-           let w = Double(head[rw]), let h = Double(head[rh]), w > 0, h > 0 {
+            let m = re.firstMatch(in: head, range: NSRange(head.startIndex..., in: head)),
+            let rw = Range(m.range(at: 1), in: head), let rh = Range(m.range(at: 2), in: head),
+            let w = Double(head[rw]), let h = Double(head[rh]), w > 0, h > 0
+        {
             return (Int(w.rounded()), Int(h.rounded()))
         }
         return nil
@@ -171,7 +177,8 @@ public enum ImageFacts {
             put(.whiteBalance, .text(balance == 0 ? "Auto" : "Manual"))
         }
         if let shot = exif[kCGImagePropertyExifDateTimeOriginal] as? String,
-           let date = ExifDate.parse(shot) {
+            let date = ExifDate.parse(shot)
+        {
             put(.shotDate, .date(date))
         }
     }
@@ -191,8 +198,10 @@ public enum ImageFacts {
         put(.caption, (iptc[kCGImagePropertyIPTCCaptionAbstract] as? String).map { .text($0) })
         put(.credit, (iptc[kCGImagePropertyIPTCCredit] as? String).map { .text($0) })
         put(.copyright, (iptc[kCGImagePropertyIPTCCopyrightNotice] as? String).map { .text($0) })
-        put(.byline, (iptc[kCGImagePropertyIPTCByline] as? [String])?.first.map { .text($0) }
-            ?? (iptc[kCGImagePropertyIPTCByline] as? String).map { .text($0) })
+        put(
+            .byline,
+            (iptc[kCGImagePropertyIPTCByline] as? [String])?.first.map { .text($0) }
+                ?? (iptc[kCGImagePropertyIPTCByline] as? String).map { .text($0) })
         put(.iptcSource, (iptc[kCGImagePropertyIPTCSource] as? String).map { .text($0) })
         put(.iptcCity, (iptc[kCGImagePropertyIPTCCity] as? String).map { .text($0) })
         put(.iptcState, (iptc[kCGImagePropertyIPTCProvinceState] as? String).map { .text($0) })
@@ -212,7 +221,7 @@ public enum ImageFacts {
         put: (MetadataField, FieldValue?) -> Void
     ) {
         guard let latitude = Numbers.double(gps[kCGImagePropertyGPSLatitude]),
-              let longitude = Numbers.double(gps[kCGImagePropertyGPSLongitude])
+            let longitude = Numbers.double(gps[kCGImagePropertyGPSLongitude])
         else { return }
 
         // The degrees are unsigned; the hemisphere is a separate letter.

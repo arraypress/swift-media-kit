@@ -32,12 +32,19 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
     /// only when the system is silent, so it can never contradict the SDK.
     public init(type: UTType?, pathExtension: String = "") {
         if let type, type.isDeclared {
-            if type.conforms(to: .folder) { self = .folder }
-            else if type.conforms(to: .image) { self = .image }
-            else if type.conforms(to: .movie) || type.conforms(to: .video) { self = .video }
-            else if type.conforms(to: .audio) { self = .audio }
-            else if type.conforms(to: .pdf) { self = .document }
-            else { self = .other }
+            if type.conforms(to: .folder) {
+                self = .folder
+            } else if type.conforms(to: .image) {
+                self = .image
+            } else if type.conforms(to: .movie) || type.conforms(to: .video) {
+                self = .video
+            } else if type.conforms(to: .audio) {
+                self = .audio
+            } else if type.conforms(to: .pdf) {
+                self = .document
+            } else {
+                self = .other
+            }
             return
         }
         self = Self.undeclared[pathExtension.lowercased()] ?? .other
@@ -53,7 +60,7 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
     public static let undeclared: [String: MediaKind] = [
         "mkv": .video, "mk3d": .video, "mks": .video, "ogm": .video, "rmvb": .video, "divx": .video,
         "mka": .audio, "ape": .audio, "wv": .audio, "dsf": .audio, "dff": .audio,
-        "tak": .audio, "tta": .audio, "mpc": .audio, "shn": .audio, "opus": .audio
+        "tak": .audio, "tta": .audio, "mpc": .audio, "shn": .audio, "opus": .audio,
     ]
 
     /// The sources worth consulting for a file of this sort.
@@ -82,7 +89,10 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
         case .video: String(localized: "Video", bundle: .module, comment: "Metadata group heading or kind of file: moving pictures.")
         case .document: String(localized: "Document", bundle: .module, comment: "Metadata group heading or kind of file: a PDF document.")
         case .folder: String(localized: "Folder", bundle: .module, comment: "Metadata field label: the folder containing the file.")
-        case .other: String(localized: "Other", bundle: .module, comment: "Kind of file: anything that is not an image, audio, video, document or folder.")
+        case .other:
+            String(
+                localized: "Other", bundle: .module,
+                comment: "Kind of file: anything that is not an image, audio, video, document or folder.")
         }
     }
 }

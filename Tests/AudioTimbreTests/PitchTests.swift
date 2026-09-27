@@ -41,8 +41,9 @@ final class PitchTests: XCTestCase {
         XCTAssertNil(result.pitch)
         XCTAssertEqual(result.rejection, .lowConfidence)
         XCTAssertLessThan(result.confidence, PitchEstimator.minimumConfidence)
-        XCTAssertGreaterThanOrEqual(result.confidence, 0,
-                                    "the confidence is a fact whether or not the estimate survived")
+        XCTAssertGreaterThanOrEqual(
+            result.confidence, 0,
+            "the confidence is a fact whether or not the estimate survived")
     }
 
     func testTheCentroidGateRejectsATransientArtifact() {
@@ -52,8 +53,9 @@ final class PitchTests: XCTestCase {
         let result = estimate(TestSignals.sine(hz: 440, seconds: 1), centroidHz: 100)
         XCTAssertNil(result.pitch, "440 Hz is 4.4x a 100 Hz centroid and cannot be the fundamental")
         XCTAssertEqual(result.rejection, .aboveCentroid)
-        XCTAssertGreaterThan(result.confidence, 0.95,
-                             "it was confident and still wrong — that is the point of the gate")
+        XCTAssertGreaterThan(
+            result.confidence, 0.95,
+            "it was confident and still wrong — that is the point of the gate")
     }
 
     func testTheGateAllowsAFundamentalBelowTheCentroid() {
@@ -68,15 +70,17 @@ final class PitchTests: XCTestCase {
         // 500 samples is 11 ms — too short to hold two periods of 20 Hz, but eleven
         // periods of 440 Hz. The lowest detectable pitch rises; the answer does not
         // disappear. Refusing here would throw away every short one-shot.
-        let result = estimate(TestSignals.sine(hz: 440, seconds: 500 / TestSignals.sampleRate),
-                              centroidHz: 440)
+        let result = estimate(
+            TestSignals.sine(hz: 440, seconds: 500 / TestSignals.sampleRate),
+            centroidHz: 440)
         XCTAssertEqual(result.pitch?.name, "A4")
     }
 
     func testRefusesASignalTooShortToSearchAnythingAtAll() {
         // 40 samples cannot hold two periods of even the highest pitch searched.
-        let result = estimate(TestSignals.sine(hz: 1000, seconds: 40 / TestSignals.sampleRate),
-                              centroidHz: 1000)
+        let result = estimate(
+            TestSignals.sine(hz: 1000, seconds: 40 / TestSignals.sampleRate),
+            centroidHz: 1000)
         XCTAssertEqual(result.rejection, .tooShortForLowestPitch)
     }
 
@@ -98,8 +102,9 @@ final class PitchTests: XCTestCase {
         let kick = TestSignals.pitchGlide(from: 160, to: 40, tau: 0.30, seconds: 0.35)
         let result = estimate(kick, centroidHz: 200)
         XCTAssertNotNil(result.pitch)
-        XCTAssertEqual(result.pitch?.frequencyHz ?? 0, 151.5, accuracy: 5,
-                       "the long window alone lands near 139.6 Hz")
+        XCTAssertEqual(
+            result.pitch?.frequencyHz ?? 0, 151.5, accuracy: 5,
+            "the long window alone lands near 139.6 Hz")
     }
 
     func testNoPeakReportsNoConfidenceRatherThanTheBoundaryCorrelation() {

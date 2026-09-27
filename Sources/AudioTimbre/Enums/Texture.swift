@@ -46,8 +46,8 @@ public enum Texture: String, Codable, CaseIterable, Sendable {
     public static func of(flatness: Double) -> Texture {
         switch flatness {
         case ..<0.025: return .tonal
-        case ..<0.25:  return .mixed
-        default:      return .noisy
+        case ..<0.25: return .mixed
+        default: return .noisy
         }
     }
 }

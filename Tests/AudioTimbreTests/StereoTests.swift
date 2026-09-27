@@ -17,8 +17,9 @@ final class StereoTests: XCTestCase {
         let mono = TestSignals.sine(hz: 440, seconds: 0.5)
         let image = StereoAnalysis.measure(left: mono, right: mono)!
         XCTAssertEqual(image.correlation, 1.0, accuracy: 1e-6)
-        XCTAssertEqual(image.sideMidDb, Loudness.silenceFloorDbfs,
-                       "dual mono has no Side signal at all")
+        XCTAssertEqual(
+            image.sideMidDb, Loudness.silenceFloorDbfs,
+            "dual mono has no Side signal at all")
         XCTAssertTrue(image.survivesMonoSum)
     }
 
@@ -35,8 +36,9 @@ final class StereoTests: XCTestCase {
         let right = TestSignals.whiteNoise(seconds: 1, seed: 2)
         let image = StereoAnalysis.measure(left: left, right: right)!
         XCTAssertEqual(image.correlation, 0, accuracy: 0.05)
-        XCTAssertEqual(image.sideMidDb, 0, accuracy: 1.0,
-                       "with nothing shared, Side and Mid carry the same energy")
+        XCTAssertEqual(
+            image.sideMidDb, 0, accuracy: 1.0,
+            "with nothing shared, Side and Mid carry the same energy")
     }
 
     func testPartialWidthSitsBetweenTheTwoExtremes() {

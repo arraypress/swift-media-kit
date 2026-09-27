@@ -176,7 +176,7 @@ final class CatalogueTests: XCTestCase {
                 .keywords: .list(["wedding", "larsen"]),
                 .hasAlpha: .boolean(false),
                 .latitude: .coordinate(35.0116),
-                .duration: .duration(12.5)
+                .duration: .duration(12.5),
             ],
             raw: ["exif.LensModel": .text("NIKKOR Z 24-70mm f/4 S"), "fs.inode": .integer(99)]
         )

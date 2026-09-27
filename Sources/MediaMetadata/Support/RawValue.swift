@@ -68,8 +68,9 @@ public enum RawValue {
             if let nested = value as? [String: Any] {
                 flatten(nested, prefix: path, into: &values)
             } else if let nested = value as? [CFString: Any] {
-                flatten(Dictionary(uniqueKeysWithValues: nested.map { ($0.key as String, $0.value) }),
-                        prefix: path, into: &values)
+                flatten(
+                    Dictionary(uniqueKeysWithValues: nested.map { ($0.key as String, $0.value) }),
+                    prefix: path, into: &values)
             } else if let converted = convert(value) {
                 values[path] = converted
             }

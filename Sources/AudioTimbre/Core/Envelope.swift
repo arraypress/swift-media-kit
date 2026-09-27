@@ -92,16 +92,18 @@ public enum Envelope {
     /// - Returns: a zeroed shape when the signal is too short to hold two windows.
     public static func measure(_ samples: [Float], sampleRate: Double) -> Shape {
         guard sampleRate > 0, !samples.isEmpty else {
-            return Shape(timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
-                         decayMs: nil, sustainRatio: 0)
+            return Shape(
+                timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
+                decayMs: nil, sustainRatio: 0)
         }
 
         let window = max(1, min(samples.count, Int(windowSeconds * sampleRate)))
         let hop = max(1, Int(hopSeconds * sampleRate))
         let readings = (samples.count - window) / hop + 1
         guard readings >= 2 else {
-            return Shape(timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
-                         decayMs: nil, sustainRatio: 0)
+            return Shape(
+                timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
+                decayMs: nil, sustainRatio: 0)
         }
 
         // Prefix sums of squares: energy over any span is one subtraction.
@@ -118,8 +120,9 @@ public enum Envelope {
         }
 
         guard let peak = levels.max(), peak > 0 else {
-            return Shape(timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
-                         decayMs: nil, sustainRatio: 0)
+            return Shape(
+                timeToPeakMs: 0, attackMs: nil, attackRejection: .peaksLate,
+                decayMs: nil, sustainRatio: 0)
         }
         let peakIndex = levels.firstIndex(of: peak) ?? 0
 
@@ -131,8 +134,9 @@ public enum Envelope {
         // file fails purely because a 20 ms window smeared silence and transient together.
         let horizon = max(Double(window), Double(samples.count) * onsetHorizon)
         let peakIsAnOnset = Double(peakIndex * hop) <= horizon
-        let rejection = attackRejection(levels, peak: peak, peakIndex: peakIndex,
-                                        peakIsAnOnset: peakIsAnOnset)
+        let rejection = attackRejection(
+            levels, peak: peak, peakIndex: peakIndex,
+            peakIsAnOnset: peakIsAnOnset)
 
         let decayFloor = peak * pow(10, decayThresholdDb / 20)
         var decayMs: Double?
@@ -149,11 +153,12 @@ public enum Envelope {
         }
         let sustainRatio = Double(sustaining) / Double(readings)
 
-        return Shape(timeToPeakMs: timeToPeakMs,
-                     attackMs: rejection == nil ? timeToPeakMs : nil,
-                     attackRejection: rejection,
-                     decayMs: decayMs,
-                     sustainRatio: sustainRatio)
+        return Shape(
+            timeToPeakMs: timeToPeakMs,
+            attackMs: rejection == nil ? timeToPeakMs : nil,
+            attackRejection: rejection,
+            decayMs: decayMs,
+            sustainRatio: sustainRatio)
     }
 
     /// Whether this level series has an attack worth naming, and if not, why not.
@@ -163,8 +168,10 @@ public enum Envelope {
     ///   - peak: the loudest level in the series.
     ///   - peakIndex: where that level sits.
     /// - Returns: `nil` when the time-to-peak IS an attack.
-    static func attackRejection(_ levels: [Double], peak: Double, peakIndex: Int,
-                                peakIsAnOnset: Bool) -> AttackRejection? {
+    static func attackRejection(
+        _ levels: [Double], peak: Double, peakIndex: Int,
+        peakIsAnOnset: Bool
+    ) -> AttackRejection? {
         guard levels.first != nil else { return .peaksLate }
 
         // The loudest moment is somewhere in the middle, so it is not an onset — it is

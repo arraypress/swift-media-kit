@@ -17,7 +17,9 @@ import XCTest
 final class OKLabTests: XCTestCase {
 
     func testRoundTripsSRGB() {
-        for (r, g, b) in [(0, 0, 0), (255, 255, 255), (255, 0, 0), (12, 200, 90), (128, 128, 128), (240, 210, 250)] as [(UInt8, UInt8, UInt8)] {
+        for (r, g, b) in [(0, 0, 0), (255, 255, 255), (255, 0, 0), (12, 200, 90), (128, 128, 128), (240, 210, 250)]
+            as [(UInt8, UInt8, UInt8)]
+        {
             let back = OKLab(r: r, g: g, b: b).rgb
             XCTAssertLessThanOrEqual(abs(Int(back.r) - Int(r)), 1)
             XCTAssertLessThanOrEqual(abs(Int(back.g) - Int(g)), 1)
@@ -30,7 +32,9 @@ final class OKLabTests: XCTestCase {
         XCTAssertEqual(OKLab(r: 255, g: 255, b: 255).l, 1, accuracy: 0.001)
         XCTAssertLessThan(OKLab(r: 128, g: 128, b: 128).chroma, 0.001, "grey has no chroma")
         XCTAssertGreaterThan(OKLab(r: 255, g: 0, b: 0).chroma, 0.2)
-        XCTAssertGreaterThan(OKLab(r: 0, g: 0, b: 255).distance(to: OKLab(r: 255, g: 255, b: 0)), OKLab(r: 0, g: 0, b: 255).distance(to: OKLab(r: 0, g: 0, b: 230)))
+        XCTAssertGreaterThan(
+            OKLab(r: 0, g: 0, b: 255).distance(to: OKLab(r: 255, g: 255, b: 0)),
+            OKLab(r: 0, g: 0, b: 255).distance(to: OKLab(r: 0, g: 0, b: 230)))
     }
 }
 
@@ -51,9 +55,10 @@ final class ExtractorTests: XCTestCase {
             x0 += block.width
         }
         let provider = CGDataProvider(data: Data(data) as CFData)!
-        return CGImage(width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: width * 4,
-                       space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
-                       provider: provider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+        return CGImage(
+            width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: width * 4,
+            space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+            provider: provider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
     }
 
     func testSharesMatchTheBlocks() throws {
@@ -89,11 +94,12 @@ final class ExtractorTests: XCTestCase {
     func testTransparentPixelsAreNotColours() throws {
         let width = 100, height = 10
         var data = [UInt8](repeating: 0, count: width * height * 4)
-        for y in 0..<height { for x in 0..<50 { let i = (y * width + x) * 4; data[i] = 200; data[i + 3] = 255 } }   // half red, half clear
+        for y in 0..<height { for x in 0..<50 { let i = (y * width + x) * 4; data[i] = 200; data[i + 3] = 255 } }  // half red, half clear
         let provider = CGDataProvider(data: Data(data) as CFData)!
-        let img = CGImage(width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: width * 4,
-                          space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
-                          provider: provider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
+        let img = CGImage(
+            width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: width * 4,
+            space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+            provider: provider, decode: nil, shouldInterpolate: false, intent: .defaultIntent)!
         let palette = try PaletteExtractor.extract(from: img)
         XCTAssertEqual(palette.count, 1)
         XCTAssertEqual(palette[0].hex, "#C80000")

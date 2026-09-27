@@ -16,7 +16,7 @@ import ImageIO
 import UniformTypeIdentifiers
 
 #if canImport(PDFKit)
-import PDFKit
+    import PDFKit
 #endif
 
 enum Fixtures {
@@ -84,7 +84,7 @@ enum Fixtures {
                 kCGImagePropertyTIFFMake: Photo.make,
                 kCGImagePropertyTIFFModel: Photo.model,
                 kCGImagePropertyTIFFSoftware: Photo.software,
-                kCGImagePropertyTIFFOrientation: orientation
+                kCGImagePropertyTIFFOrientation: orientation,
             ] as [CFString: Any],
             kCGImagePropertyExifDictionary: [
                 kCGImagePropertyExifLensModel: Photo.lens,
@@ -97,7 +97,7 @@ enum Fixtures {
                 kCGImagePropertyExifMeteringMode: Photo.meteringMode,
                 kCGImagePropertyExifFlash: Photo.flash,
                 kCGImagePropertyExifWhiteBalance: 0,
-                kCGImagePropertyExifDateTimeOriginal: Photo.dateOriginal
+                kCGImagePropertyExifDateTimeOriginal: Photo.dateOriginal,
             ] as [CFString: Any],
             kCGImagePropertyIPTCDictionary: [
                 kCGImagePropertyIPTCHeadline: Photo.headline,
@@ -109,7 +109,7 @@ enum Fixtures {
                 kCGImagePropertyIPTCSource: Photo.source,
                 kCGImagePropertyIPTCCity: Photo.city,
                 kCGImagePropertyIPTCProvinceState: Photo.state,
-                kCGImagePropertyIPTCCountryPrimaryLocationName: Photo.country
+                kCGImagePropertyIPTCCountryPrimaryLocationName: Photo.country,
             ] as [CFString: Any],
             kCGImagePropertyGPSDictionary: [
                 kCGImagePropertyGPSLatitude: Photo.latitude,
@@ -117,13 +117,15 @@ enum Fixtures {
                 kCGImagePropertyGPSLongitude: Photo.longitude,
                 kCGImagePropertyGPSLongitudeRef: "E",
                 kCGImagePropertyGPSAltitude: Photo.altitude,
-                kCGImagePropertyGPSAltitudeRef: 0
-            ] as [CFString: Any]
+                kCGImagePropertyGPSAltitudeRef: 0,
+            ] as [CFString: Any],
         ]
 
-        guard let destination = CGImageDestinationCreateWithURL(
-            url as CFURL, UTType.jpeg.identifier as CFString, 1, nil
-        ) else { throw Failure.cannotWrite }
+        guard
+            let destination = CGImageDestinationCreateWithURL(
+                url as CFURL, UTType.jpeg.identifier as CFString, 1, nil
+            )
+        else { throw Failure.cannotWrite }
         CGImageDestinationAddImage(destination, image, properties as CFDictionary)
         guard CGImageDestinationFinalize(destination) else { throw Failure.cannotWrite }
         return url
@@ -143,12 +145,14 @@ enum Fixtures {
                 kCGImagePropertyGPSLatitude: 33.868_8,
                 kCGImagePropertyGPSLatitudeRef: "S",
                 kCGImagePropertyGPSLongitude: 70.650_0,
-                kCGImagePropertyGPSLongitudeRef: "W"
+                kCGImagePropertyGPSLongitudeRef: "W",
             ] as [CFString: Any]
         ]
-        guard let destination = CGImageDestinationCreateWithURL(
-            url as CFURL, UTType.jpeg.identifier as CFString, 1, nil
-        ) else { throw Failure.cannotWrite }
+        guard
+            let destination = CGImageDestinationCreateWithURL(
+                url as CFURL, UTType.jpeg.identifier as CFString, 1, nil
+            )
+        else { throw Failure.cannotWrite }
         CGImageDestinationAddImage(destination, image, properties as CFDictionary)
         guard CGImageDestinationFinalize(destination) else { throw Failure.cannotWrite }
         return url
@@ -175,7 +179,7 @@ enum Fixtures {
             AVFormatIDKey: kAudioFormatMPEG4AAC,
             AVSampleRateKey: Song.sampleRate,
             AVNumberOfChannelsKey: Song.channels,
-            AVEncoderBitRateKey: 128_000
+            AVEncoderBitRateKey: 128_000,
         ]
         let input = AVAssetWriterInput(mediaType: .audio, outputSettings: settings)
         input.expectsMediaDataInRealTime = false
@@ -183,7 +187,7 @@ enum Fixtures {
         writer.metadata = [
             item(.commonIdentifierTitle, Song.title),
             item(.commonIdentifierArtist, Song.artist),
-            item(.commonIdentifierAlbumName, Song.album)
+            item(.commonIdentifierAlbumName, Song.album),
         ]
 
         writer.startWriting()
@@ -256,33 +260,33 @@ enum Fixtures {
     // MARK: - Documents
 
     #if canImport(PDFKit)
-    /// What ``writePDF(to:)`` puts in the file.
-    enum Document {
-        static let title = "Statement of Delivery"
-        static let author = "ArrayPress"
-        static let subject = "Larsen Wedding"
-        static let pages = 3
-        static let width = 595.0
-        static let height = 842.0
-    }
-
-    /// Writes a three page A4 PDF with document properties set.
-    @discardableResult
-    static func writePDF(to url: URL) throws -> URL {
-        let document = PDFDocument()
-        for index in 0..<Document.pages {
-            let page = PDFPage()
-            page.setBounds(CGRect(x: 0, y: 0, width: Document.width, height: Document.height), for: .mediaBox)
-            document.insert(page, at: index)
+        /// What ``writePDF(to:)`` puts in the file.
+        enum Document {
+            static let title = "Statement of Delivery"
+            static let author = "ArrayPress"
+            static let subject = "Larsen Wedding"
+            static let pages = 3
+            static let width = 595.0
+            static let height = 842.0
         }
-        document.documentAttributes = [
-            PDFDocumentAttribute.titleAttribute: Document.title,
-            PDFDocumentAttribute.authorAttribute: Document.author,
-            PDFDocumentAttribute.subjectAttribute: Document.subject
-        ]
-        guard document.write(to: url) else { throw Failure.cannotWrite }
-        return url
-    }
+
+        /// Writes a three page A4 PDF with document properties set.
+        @discardableResult
+        static func writePDF(to url: URL) throws -> URL {
+            let document = PDFDocument()
+            for index in 0..<Document.pages {
+                let page = PDFPage()
+                page.setBounds(CGRect(x: 0, y: 0, width: Document.width, height: Document.height), for: .mediaBox)
+                document.insert(page, at: index)
+            }
+            document.documentAttributes = [
+                PDFDocumentAttribute.titleAttribute: Document.title,
+                PDFDocumentAttribute.authorAttribute: Document.author,
+                PDFDocumentAttribute.subjectAttribute: Document.subject,
+            ]
+            guard document.write(to: url) else { throw Failure.cannotWrite }
+            return url
+        }
     #endif
 
     // MARK: - Plain files

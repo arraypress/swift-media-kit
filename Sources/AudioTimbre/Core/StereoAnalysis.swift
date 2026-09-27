@@ -41,7 +41,8 @@ public enum StereoAnalysis {
         let denominator = (Double(leftEnergy) * Double(rightEnergy)).squareRoot()
         // Two silent channels are identical, not undefined: report them as perfectly
         // correlated rather than dividing by zero.
-        let correlation = denominator > 1e-12
+        let correlation =
+            denominator > 1e-12
             ? min(1.0, max(-1.0, Double(cross) / denominator))
             : 1.0
 

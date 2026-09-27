@@ -30,34 +30,36 @@ public enum ImageRaw {
     ///
     /// Taken from `CGImageProperties.h`. A dictionary absent from a given file
     /// simply contributes nothing.
-    static var namespaces: [(key: CFString, prefix: String)] { [
-        (kCGImagePropertyExifDictionary, "exif"),
-        (kCGImagePropertyExifAuxDictionary, "exifAux"),
-        (kCGImagePropertyTIFFDictionary, "tiff"),
-        (kCGImagePropertyIPTCDictionary, "iptc"),
-        (kCGImagePropertyGPSDictionary, "gps"),
-        (kCGImagePropertyJFIFDictionary, "jfif"),
-        (kCGImagePropertyPNGDictionary, "png"),
-        (kCGImagePropertyGIFDictionary, "gif"),
-        (kCGImagePropertyHEIFDictionary, "heif"),
-        (kCGImagePropertyHEICSDictionary, "heics"),
-        (kCGImagePropertyWebPDictionary, "webp"),
-        (kCGImagePropertyTGADictionary, "tga"),
-        (kCGImagePropertyAVISDictionary, "avis"),
-        (kCGImagePropertyOpenEXRDictionary, "openEXR"),
-        (kCGImagePropertyDNGDictionary, "dng"),
-        (kCGImagePropertyCIFFDictionary, "ciff"),
-        (kCGImagePropertyRawDictionary, "raw"),
-        (kCGImagePropertyFileContentsDictionary, "fileContents"),
-        (kCGImageProperty8BIMDictionary, "photoshop"),
-        (kCGImagePropertyMakerAppleDictionary, "makerApple"),
-        (kCGImagePropertyMakerCanonDictionary, "makerCanon"),
-        (kCGImagePropertyMakerNikonDictionary, "makerNikon"),
-        (kCGImagePropertyMakerFujiDictionary, "makerFuji"),
-        (kCGImagePropertyMakerMinoltaDictionary, "makerMinolta"),
-        (kCGImagePropertyMakerOlympusDictionary, "makerOlympus"),
-        (kCGImagePropertyMakerPentaxDictionary, "makerPentax")
-    ] }
+    static var namespaces: [(key: CFString, prefix: String)] {
+        [
+            (kCGImagePropertyExifDictionary, "exif"),
+            (kCGImagePropertyExifAuxDictionary, "exifAux"),
+            (kCGImagePropertyTIFFDictionary, "tiff"),
+            (kCGImagePropertyIPTCDictionary, "iptc"),
+            (kCGImagePropertyGPSDictionary, "gps"),
+            (kCGImagePropertyJFIFDictionary, "jfif"),
+            (kCGImagePropertyPNGDictionary, "png"),
+            (kCGImagePropertyGIFDictionary, "gif"),
+            (kCGImagePropertyHEIFDictionary, "heif"),
+            (kCGImagePropertyHEICSDictionary, "heics"),
+            (kCGImagePropertyWebPDictionary, "webp"),
+            (kCGImagePropertyTGADictionary, "tga"),
+            (kCGImagePropertyAVISDictionary, "avis"),
+            (kCGImagePropertyOpenEXRDictionary, "openEXR"),
+            (kCGImagePropertyDNGDictionary, "dng"),
+            (kCGImagePropertyCIFFDictionary, "ciff"),
+            (kCGImagePropertyRawDictionary, "raw"),
+            (kCGImagePropertyFileContentsDictionary, "fileContents"),
+            (kCGImageProperty8BIMDictionary, "photoshop"),
+            (kCGImagePropertyMakerAppleDictionary, "makerApple"),
+            (kCGImagePropertyMakerCanonDictionary, "makerCanon"),
+            (kCGImagePropertyMakerNikonDictionary, "makerNikon"),
+            (kCGImagePropertyMakerFujiDictionary, "makerFuji"),
+            (kCGImagePropertyMakerMinoltaDictionary, "makerMinolta"),
+            (kCGImagePropertyMakerOlympusDictionary, "makerOlympus"),
+            (kCGImagePropertyMakerPentaxDictionary, "makerPentax"),
+        ]
+    }
 
     /// Every property of the first image in the file.
     ///
@@ -67,7 +69,7 @@ public enum ImageRaw {
     public static func read(_ url: URL) -> [String: FieldValue] {
         let options = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let source = CGImageSourceCreateWithURL(url as CFURL, options),
-              let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
+            let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any]
         else { return [:] }
 
         var values: [String: FieldValue] = [:]

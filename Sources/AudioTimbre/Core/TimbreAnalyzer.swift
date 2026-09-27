@@ -59,9 +59,11 @@ public enum TimbreAnalyzer {
         }
 
         let envelope = Envelope.measure(mono, sampleRate: sampleRate)
-        let pitch = PitchEstimator.estimate(mono, sampleRate: sampleRate,
-                                            centroidHz: spectral.centroidHz)
-        let stereo = channels.count >= 2
+        let pitch = PitchEstimator.estimate(
+            mono, sampleRate: sampleRate,
+            centroidHz: spectral.centroidHz)
+        let stereo =
+            channels.count >= 2
             ? StereoAnalysis.measure(left: channels[0], right: channels[1])
             : nil
 

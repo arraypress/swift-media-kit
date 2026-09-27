@@ -32,7 +32,8 @@ final class ImageMetadataTests: XCTestCase {
     /// the width is in a unit that is not pixels.
     func testSVGSizeComesFromAttributesOrViewBox() async throws {
         let attrs = directory.appendingPathComponent("attrs.svg")
-        try #"<svg xmlns="http://www.w3.org/2000/svg" width="640px" height="360" viewBox="0 0 16 9"></svg>"#.write(to: attrs, atomically: true, encoding: .utf8)
+        try #"<svg xmlns="http://www.w3.org/2000/svg" width="640px" height="360" viewBox="0 0 16 9"></svg>"#.write(
+            to: attrs, atomically: true, encoding: .utf8)
         let attrFacts = try await MetadataReader.read(attrs, fields: [.width, .height, .dimensions, .orientation])
         XCTAssertEqual(attrFacts.kind, .image)
         XCTAssertEqual(attrFacts.values[.width], .integer(640))
@@ -41,7 +42,8 @@ final class ImageMetadataTests: XCTestCase {
         XCTAssertEqual(attrFacts.string(for: .orientation), "Landscape")
 
         let box = directory.appendingPathComponent("box.svg")
-        try #"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0, 0, 24, 48"><rect/></svg>"#.write(to: box, atomically: true, encoding: .utf8)
+        try #"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0, 0, 24, 48"><rect/></svg>"#.write(
+            to: box, atomically: true, encoding: .utf8)
         let boxFacts = try await MetadataReader.read(box, fields: [.width, .height])
         XCTAssertEqual(boxFacts.values[.width], .integer(24))
         XCTAssertEqual(boxFacts.values[.height], .integer(48))
@@ -170,9 +172,11 @@ final class ImageMetadataTests: XCTestCase {
         XCTAssertEqual(facts.string(for: .month), "06")
         XCTAssertEqual(facts.string(for: .day), "27")
         XCTAssertEqual(facts.string(for: .time), "13:42:11")
-        XCTAssertEqual(facts.capturedDate, facts.values[.shotDate].flatMap {
-            if case .date(let date) = $0 { return date } else { return nil }
-        })
+        XCTAssertEqual(
+            facts.capturedDate,
+            facts.values[.shotDate].flatMap {
+                if case .date(let date) = $0 { return date } else { return nil }
+            })
     }
 
     // MARK: - IPTC

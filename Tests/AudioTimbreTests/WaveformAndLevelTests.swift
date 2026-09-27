@@ -76,7 +76,7 @@ final class WaveformAndLevelTests: XCTestCase {
         do {
             _ = try await Waveform.peaks(fileAt: directory.appendingPathComponent("nope.wav"))
             XCTFail("a missing file must throw")
-        } catch AudioTimbreError.fileNotFound { } catch { XCTFail("wrong error \(error)") }
+        } catch AudioTimbreError.fileNotFound {} catch { XCTFail("wrong error \(error)") }
     }
 
     func testLevelOfARampASquareAndSilence() async throws {

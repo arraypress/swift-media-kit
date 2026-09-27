@@ -36,7 +36,8 @@ public enum Waveform {
         _ = try await SampleStream.read(
             fileAt: url, maxSeconds: maxSeconds,
             settings: [AVSampleRateKey: sampleRate, AVNumberOfChannelsKey: 1],
-            willRead: { seconds in perBin = max(1, (Int(seconds * sampleRate) + bins - 1) / bins) }   // the length is known before the first block
+            // the length is known before the first block
+            willRead: { seconds in perBin = max(1, (Int(seconds * sampleRate) + bins - 1) / bins) }
         ) { samples, count in
             for i in 0..<count {
                 let bin = min(bins - 1, (index + i) / perBin)

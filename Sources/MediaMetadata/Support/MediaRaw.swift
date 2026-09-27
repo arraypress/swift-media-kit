@@ -89,7 +89,8 @@ public enum MediaRaw {
     /// `removingPercentEncoding` returns nil for that, so the escape is dropped by hand rather
     /// than leaving a misleading `A9nam`.
     static func sanitise(_ token: String) -> String {
-        let decoded = token.removingPercentEncoding
+        let decoded =
+            token.removingPercentEncoding
             ?? token.replacing(/%[0-9A-Fa-f]{2}/, with: "")
         let cleaned = decoded.unicodeScalars.map { scalar -> Character in
             if CharacterSet.alphanumerics.contains(scalar) { return Character(scalar) }
@@ -148,11 +149,13 @@ public enum MediaRaw {
                 values["\(prefix).frameRate"] = .decimal(Double((rate * 100).rounded() / 100))
             }
             if let descriptions = try? await track.load(.formatDescriptions),
-               let description = descriptions.first {
+                let description = descriptions.first
+            {
                 let code = CMFormatDescriptionGetMediaSubType(description)
                 let bytes = withUnsafeBytes(of: code.bigEndian) { Data($0) }
                 if let raw = String(data: bytes, encoding: .ascii)?.trimmingCharacters(in: .whitespaces),
-                   !raw.isEmpty {
+                    !raw.isEmpty
+                {
                     values["\(prefix).codec"] = .text(raw)
                     values["\(prefix).codecName"] = .text(Lookup.codecName(raw))
                 }

@@ -201,7 +201,7 @@ final class CorpusTests: XCTestCase {
         _ = try Corpus.writeMedia(into: directory)
         try Fixtures.writeText("plain", to: directory.appendingPathComponent("notes.txt"))
         #if canImport(PDFKit)
-        try Fixtures.writePDF(to: directory.appendingPathComponent("manifest.pdf"))
+            try Fixtures.writePDF(to: directory.appendingPathComponent("manifest.pdf"))
         #endif
 
         let urls = try FileManager.default.contentsOfDirectory(

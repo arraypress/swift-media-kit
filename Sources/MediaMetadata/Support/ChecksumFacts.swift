@@ -22,7 +22,7 @@ public enum ChecksumFacts {
         .sha256: .sha256,
         .sha384: .sha384,
         .sha512: .sha512,
-        .crc32: .crc32
+        .crc32: .crc32,
     ]
 
     /// Computes only the digests the caller asked for, reading the file once

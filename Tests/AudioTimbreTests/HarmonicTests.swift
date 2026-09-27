@@ -73,8 +73,9 @@ final class ChromaTests: XCTestCase {
         let noisy = zip(chord, TestSignals.whiteNoise(seconds: 2, amplitude: 0.10, seed: 11))
             .map { $0 + $1 }
         let profile = chroma(noisy)
-        XCTAssertEqual(Set(profile.dominant().prefix(3)), ["C", "E", "G"],
-                       "the chord must still be the top three classes under noise")
+        XCTAssertEqual(
+            Set(profile.dominant().prefix(3)), ["C", "E", "G"],
+            "the chord must still be the top three classes under noise")
         XCTAssertGreaterThan(profile.salience, 50, "and still stand well clear of its floor")
     }
 
@@ -100,8 +101,9 @@ final class ChromaTests: XCTestCase {
         let muddied = chroma(zip(chord, halfway).map { $0 + $1 })
         XCTAssertEqual(Set(muddied.dominant().prefix(3)), ["C", "E", "G"])
         for i in 0..<12 {
-            XCTAssertEqual(muddied.bins[i], clean.bins[i], accuracy: 0.02,
-                           "\(PitchClassProfile.names[i]) should be untouched by it")
+            XCTAssertEqual(
+                muddied.bins[i], clean.bins[i], accuracy: 0.02,
+                "\(PitchClassProfile.names[i]) should be untouched by it")
         }
     }
 
@@ -129,13 +131,16 @@ final class ChromaTests: XCTestCase {
         let profile = chroma(loud + quiet)
         XCTAssertEqual(profile.ranked.first, "C")
         XCTAssertLessThan(profile.strength(of: 5), 0.3, "F is barely audible and must read so")
-        XCTAssertFalse(profile.dominant().contains("F"),
-                       "a chord at 2% amplitude is not a dominant pitch class")
+        XCTAssertFalse(
+            profile.dominant().contains("F"),
+            "a chord at 2% amplitude is not a dominant pitch class")
     }
 
     func testSilenceIsRefusedRatherThanReturningAFlatProfile() {
-        XCTAssertNil(ChromaAnalysis.measure(TestSignals.silence(seconds: 1),
-                                            sampleRate: TestSignals.sampleRate))
+        XCTAssertNil(
+            ChromaAnalysis.measure(
+                TestSignals.silence(seconds: 1),
+                sampleRate: TestSignals.sampleRate))
     }
 
     func testTheProfileIsScaledSoTheStrongestClassIsOne() {
@@ -149,9 +154,10 @@ final class ChromaTests: XCTestCase {
 final class HarmonyTests: XCTestCase {
 
     func testAnalysesAChordsPitchClassesEndToEnd() throws {
-        let samples = TestSignals.chord(root: 62, intervals: [0, 3, 7])   // D minor
-        let harmony = try HarmonicAnalyzer.analyze(channels: [samples],
-                                                   sampleRate: TestSignals.sampleRate)
+        let samples = TestSignals.chord(root: 62, intervals: [0, 3, 7])  // D minor
+        let harmony = try HarmonicAnalyzer.analyze(
+            channels: [samples],
+            sampleRate: TestSignals.sampleRate)
         XCTAssertEqual(Set(harmony.dominantPitchClasses.prefix(3)), ["D", "F", "A"])
         XCTAssertTrue(harmony.summary.contains("pitch classes"))
         XCTAssertTrue(harmony.summary.contains("salience"))
@@ -163,12 +169,14 @@ final class HarmonyTests: XCTestCase {
         // twenty real kicks were confidently named "F" by a chord matcher. Reporting the
         // pitch class is true and useful; calling it a chord was not.
         let kick = TestSignals.pitchGlide(from: 90, to: 45, tau: 0.1, seconds: 0.4)
-        let harmony = try HarmonicAnalyzer.analyze(channels: [kick],
-                                                   sampleRate: TestSignals.sampleRate)
+        let harmony = try HarmonicAnalyzer.analyze(
+            channels: [kick],
+            sampleRate: TestSignals.sampleRate)
         XCTAssertFalse(harmony.dominantPitchClasses.isEmpty)
         XCTAssertTrue(harmony.summary.contains("pitch classes"))
-        XCTAssertFalse(harmony.summary.lowercased().contains("chord"),
-                       "nothing here may claim to have identified a chord")
+        XCTAssertFalse(
+            harmony.summary.lowercased().contains("chord"),
+            "nothing here may claim to have identified a chord")
     }
 
     func testSegmentsAreAnalysedIndependently() throws {
@@ -178,9 +186,10 @@ final class HarmonyTests: XCTestCase {
         let c = TestSignals.chord(root: 60, intervals: [0, 4, 7], seconds: 2)
         let f = TestSignals.chord(root: 65, intervals: [0, 4, 7], seconds: 2)
 
-        let bars = try HarmonicAnalyzer.analyze(channels: [c + f],
-                                                sampleRate: TestSignals.sampleRate,
-                                                segments: [0...2, 2...4])
+        let bars = try HarmonicAnalyzer.analyze(
+            channels: [c + f],
+            sampleRate: TestSignals.sampleRate,
+            segments: [0...2, 2...4])
         // The SET, not the order. F major is F A C, and C is both its fifth and F's own
         // third harmonic, so C can outrank the root — which is one concrete reason a
         // chroma cannot be read as a chord name without more information.
@@ -193,23 +202,26 @@ final class HarmonyTests: XCTestCase {
         // An INVERTED span cannot be passed at all — `5...4` traps inside ClosedRange
         // before this library sees it, so the parameter type does that validation.
         let samples = TestSignals.chord(root: 60, intervals: [0, 4, 7], seconds: 2)
-        let bars = try HarmonicAnalyzer.analyze(channels: [samples],
-                                                sampleRate: TestSignals.sampleRate,
-                                                segments: [0...2, 10...12, 1.9...1.9])
+        let bars = try HarmonicAnalyzer.analyze(
+            channels: [samples],
+            sampleRate: TestSignals.sampleRate,
+            segments: [0...2, 10...12, 1.9...1.9])
         XCTAssertEqual(bars.count, 1, "one valid span, one past the end, one of zero length")
     }
 
     func testRoundTripsThroughJSON() throws {
         let samples = TestSignals.chord(root: 60, intervals: [0, 4, 7])
-        let harmony = try HarmonicAnalyzer.analyze(channels: [samples],
-                                                   sampleRate: TestSignals.sampleRate)
+        let harmony = try HarmonicAnalyzer.analyze(
+            channels: [samples],
+            sampleRate: TestSignals.sampleRate)
         let data = try JSONEncoder().encode(harmony)
         XCTAssertEqual(try JSONDecoder().decode(Harmony.self, from: data), harmony)
     }
 
     func testRefusesSilenceAndMalformedInput() {
-        XCTAssertThrowsError(try HarmonicAnalyzer.analyze(
-            channels: [TestSignals.silence(seconds: 1)], sampleRate: TestSignals.sampleRate))
+        XCTAssertThrowsError(
+            try HarmonicAnalyzer.analyze(
+                channels: [TestSignals.silence(seconds: 1)], sampleRate: TestSignals.sampleRate))
         XCTAssertThrowsError(try HarmonicAnalyzer.analyze(channels: [], sampleRate: 44100))
         XCTAssertThrowsError(try HarmonicAnalyzer.analyze(channels: [[1, 2, 3]], sampleRate: 0))
     }

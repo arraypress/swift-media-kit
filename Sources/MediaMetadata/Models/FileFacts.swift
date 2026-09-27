@@ -88,7 +88,7 @@ public struct FileFacts: Sendable, Equatable {
     /// Where the file says it was made.
     public var coordinate: Coordinate? {
         guard case .coordinate(let latitude)? = values[.latitude],
-              case .coordinate(let longitude)? = values[.longitude]
+            case .coordinate(let longitude)? = values[.longitude]
         else { return nil }
         var altitude: Double?
         if case .decimal(let metres)? = values[.altitude] { altitude = metres }
@@ -190,11 +190,17 @@ extension FileFacts: Codable {
                 // recovered by trying the JSON types in order.
                 let decoder = try rawFields.superDecoder(forKey: key)
                 let single = try decoder.singleValueContainer()
-                if let text = try? single.decode(String.self) { decodedRaw[key.stringValue] = .text(text) }
-                else if let flag = try? single.decode(Bool.self) { decodedRaw[key.stringValue] = .boolean(flag) }
-                else if let whole = try? single.decode(Int.self) { decodedRaw[key.stringValue] = .integer(whole) }
-                else if let number = try? single.decode(Double.self) { decodedRaw[key.stringValue] = .decimal(number) }
-                else if let list = try? single.decode([String].self) { decodedRaw[key.stringValue] = .list(list) }
+                if let text = try? single.decode(String.self) {
+                    decodedRaw[key.stringValue] = .text(text)
+                } else if let flag = try? single.decode(Bool.self) {
+                    decodedRaw[key.stringValue] = .boolean(flag)
+                } else if let whole = try? single.decode(Int.self) {
+                    decodedRaw[key.stringValue] = .integer(whole)
+                } else if let number = try? single.decode(Double.self) {
+                    decodedRaw[key.stringValue] = .decimal(number)
+                } else if let list = try? single.decode([String].self) {
+                    decodedRaw[key.stringValue] = .list(list)
+                }
             }
         }
         raw = decodedRaw

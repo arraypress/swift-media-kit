@@ -26,16 +26,20 @@ enum TestSignals {
     static let sampleRate = 44_100.0
 
     /// A pure sine.
-    static func sine(hz: Double, seconds: Double, amplitude: Float = 1.0,
-                     sampleRate: Double = sampleRate) -> [Float] {
+    static func sine(
+        hz: Double, seconds: Double, amplitude: Float = 1.0,
+        sampleRate: Double = sampleRate
+    ) -> [Float] {
         let count = Int(seconds * sampleRate)
         let step = 2 * Double.pi * hz / sampleRate
         return (0..<count).map { amplitude * Float(sin(step * Double($0))) }
     }
 
     /// Uniform white noise from a fixed seed, so a run is reproducible.
-    static func whiteNoise(seconds: Double, amplitude: Float = 1.0, seed: UInt64 = 42,
-                           sampleRate: Double = sampleRate) -> [Float] {
+    static func whiteNoise(
+        seconds: Double, amplitude: Float = 1.0, seed: UInt64 = 42,
+        sampleRate: Double = sampleRate
+    ) -> [Float] {
         var generator = SeededGenerator(seed: seed)
         let count = Int(seconds * sampleRate)
         return (0..<count).map { _ in Float.random(in: -amplitude...amplitude, using: &generator) }
@@ -50,8 +54,10 @@ enum TestSignals {
     ///
     /// Its envelope is known exactly: the peak sits at `onset`, and the level falls 60 dB
     /// after `6.908 * tau` seconds — `60 * ln(10) / 20` time constants.
-    static func decayingSine(hz: Double, tau: Double, onset: Double, seconds: Double,
-                             amplitude: Float = 1.0, sampleRate: Double = sampleRate) -> [Float] {
+    static func decayingSine(
+        hz: Double, tau: Double, onset: Double, seconds: Double,
+        amplitude: Float = 1.0, sampleRate: Double = sampleRate
+    ) -> [Float] {
         let count = Int(seconds * sampleRate)
         let onsetSample = Int(onset * sampleRate)
         let step = 2 * Double.pi * hz / sampleRate
@@ -67,9 +73,11 @@ enum TestSignals {
     /// Amplitudes follow `1/n`, so the spectral centroid lands ABOVE the fundamental —
     /// which is the normal arrangement for pitched material and the one the pitch gate is
     /// built around. A bare sine is the unusual case: its centroid IS its fundamental.
-    static func harmonicDecay(fundamental: Double, harmonics: Int = 4, tau: Double,
-                              onset: Double, seconds: Double,
-                              sampleRate: Double = sampleRate) -> [Float] {
+    static func harmonicDecay(
+        fundamental: Double, harmonics: Int = 4, tau: Double,
+        onset: Double, seconds: Double,
+        sampleRate: Double = sampleRate
+    ) -> [Float] {
         let count = Int(seconds * sampleRate)
         let onsetSample = Int(onset * sampleRate)
         return (0..<count).map { i in
@@ -86,8 +94,10 @@ enum TestSignals {
     /// A decaying tone whose pitch falls as it goes — the shape of a kick drum.
     ///
     /// Its period is never constant, so a long analysis window contains no single one.
-    static func pitchGlide(from startHz: Double, to endHz: Double, tau: Double,
-                           seconds: Double, sampleRate: Double = sampleRate) -> [Float] {
+    static func pitchGlide(
+        from startHz: Double, to endHz: Double, tau: Double,
+        seconds: Double, sampleRate: Double = sampleRate
+    ) -> [Float] {
         let count = Int(seconds * sampleRate)
         var phase = 0.0
         return (0..<count).map { i in
@@ -105,8 +115,10 @@ enum TestSignals {
     /// - Parameters:
     ///   - root: MIDI note number of the root, 60 = middle C.
     ///   - intervals: semitones above the root.
-    static func chord(root: Int, intervals: [Int], seconds: Double = 2,
-                      sampleRate: Double = sampleRate) -> [Float] {
+    static func chord(
+        root: Int, intervals: [Int], seconds: Double = 2,
+        sampleRate: Double = sampleRate
+    ) -> [Float] {
         let count = Int(seconds * sampleRate)
         var out = [Float](repeating: 0, count: count)
         for interval in intervals {

@@ -52,13 +52,13 @@ public enum FileSystemRaw {
             .totalFileSizeKey, .ubiquitousItemContainerDisplayNameKey,
             .ubiquitousItemDownloadRequestedKey, .ubiquitousItemHasUnresolvedConflictsKey,
             .ubiquitousItemIsDownloadingKey, .ubiquitousItemIsUploadedKey,
-            .ubiquitousItemIsUploadingKey, .isPurgeableKey, .isSparseKey
+            .ubiquitousItemIsUploadingKey, .isPurgeableKey, .isSparseKey,
         ]
         #if os(macOS)
-        keys.formUnion([
-            .applicationIsScriptableKey, .isMountTriggerKey, .labelNumberKey,
-            .localizedLabelKey, .tagNamesKey
-        ])
+            keys.formUnion([
+                .applicationIsScriptableKey, .isMountTriggerKey, .labelNumberKey,
+                .localizedLabelKey, .tagNamesKey,
+            ])
         #endif
         return keys
     }
@@ -99,7 +99,8 @@ public enum FileSystemRaw {
 
         // Asked for alone — see the note at the top of this file.
         if resources.isDirectory == true,
-           let entries = try? url.resourceValues(forKeys: [.directoryEntryCountKey]).directoryEntryCount {
+            let entries = try? url.resourceValues(forKeys: [.directoryEntryCountKey]).directoryEntryCount
+        {
             count("directoryEntryCount", entries)
         }
 
@@ -143,11 +144,11 @@ public enum FileSystemRaw {
         text("ubiquitousItemContainerDisplayName", resources.ubiquitousItemContainerDisplayName)
 
         #if os(macOS)
-        if let tags = resources.tagNames, !tags.isEmpty { put("tagNames", .list(tags)) }
-        count("labelNumber", resources.labelNumber)
-        text("localizedLabel", resources.localizedLabel)
-        flag("isMountTrigger", resources.isMountTrigger)
-        flag("applicationIsScriptable", resources.applicationIsScriptable)
+            if let tags = resources.tagNames, !tags.isEmpty { put("tagNames", .list(tags)) }
+            count("labelNumber", resources.labelNumber)
+            text("localizedLabel", resources.localizedLabel)
+            flag("isMountTrigger", resources.isMountTrigger)
+            flag("applicationIsScriptable", resources.applicationIsScriptable)
         #endif
 
         // Whatever the SDK exposes only through the untyped dictionary.
@@ -174,8 +175,8 @@ public enum FileSystemRaw {
         }
 
         #if os(macOS)
-        text("finderComment", ExtendedAttributes.finderComment(of: url))
-        text("whereFrom", ExtendedAttributes.whereFrom(of: url))
+            text("finderComment", ExtendedAttributes.finderComment(of: url))
+            text("whereFrom", ExtendedAttributes.whereFrom(of: url))
         #endif
 
         return values

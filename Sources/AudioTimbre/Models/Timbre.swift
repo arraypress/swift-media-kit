@@ -144,38 +144,48 @@ public struct Timbre: Codable, Hashable, Sendable {
     public var summary: String {
         var lines: [String] = []
 
-        lines.append(String(format: "%.2f s, %.3g kHz %@",
-                            duration, sampleRate / 1000, channels == 1 ? "mono" : "stereo"))
+        lines.append(
+            String(
+                format: "%.2f s, %.3g kHz %@",
+                duration, sampleRate / 1000, channels == 1 ? "mono" : "stereo"))
 
-        lines.append(String(format: "%@ (centroid %.0f Hz, range %.0f-%.0f, bandwidth %.0f, rolloff %.0f) - %@ (flatness %.3f)",
-                            brightness.rawValue,
-                            spectralCentroidHz,
-                            spectralCentroidRangeHz.lowerBound,
-                            spectralCentroidRangeHz.upperBound,
-                            spectralBandwidthHz,
-                            spectralRolloffHz,
-                            texture.rawValue,
-                            spectralFlatness))
+        lines.append(
+            String(
+                format: "%@ (centroid %.0f Hz, range %.0f-%.0f, bandwidth %.0f, rolloff %.0f) - %@ (flatness %.3f)",
+                brightness.rawValue,
+                spectralCentroidHz,
+                spectralCentroidRangeHz.lowerBound,
+                spectralCentroidRangeHz.upperBound,
+                spectralBandwidthHz,
+                spectralRolloffHz,
+                texture.rawValue,
+                spectralFlatness))
 
         if let pitch {
-            lines.append(String(format: "pitched %@ (%.1f Hz, %+.0f cents, confidence %.2f)",
-                                pitch.name, pitch.frequencyHz, pitch.centsFromNote, pitchConfidence))
+            lines.append(
+                String(
+                    format: "pitched %@ (%.1f Hz, %+.0f cents, confidence %.2f)",
+                    pitch.name, pitch.frequencyHz, pitch.centsFromNote, pitchConfidence))
         } else {
             let why = pitchRejection?.rawValue ?? "none found"
             lines.append(String(format: "no pitch (%@, confidence %.2f)", why, pitchConfidence))
         }
 
-        let rise = attackMs.map { String(format: "attack %.0f ms", $0) }
-            ?? String(format: "peaks at %.0f ms (%@, not an attack)",
-                      timeToPeakMs, attackRejection?.rawValue ?? "unknown")
+        let rise =
+            attackMs.map { String(format: "attack %.0f ms", $0) }
+            ?? String(
+                format: "peaks at %.0f ms (%@, not an attack)",
+                timeToPeakMs, attackRejection?.rawValue ?? "unknown")
         let fall = decayMs.map { String(format: "decay %.0f ms", $0) } ?? "no decay to -60 dB"
         lines.append(String(format: "%@, %@, sustain %.2f", rise, fall, sustainRatio))
 
         lines.append(String(format: "peak %.1f dBFS, RMS %.1f dBFS", peakDbfs, rmsDbfs))
 
         if let stereo {
-            lines.append(String(format: "stereo: correlation %.2f, S/M %.1f dB",
-                                stereo.correlation, stereo.sideMidDb))
+            lines.append(
+                String(
+                    format: "stereo: correlation %.2f, S/M %.1f dB",
+                    stereo.correlation, stereo.sideMidDb))
         }
 
         return lines.joined(separator: "\n")

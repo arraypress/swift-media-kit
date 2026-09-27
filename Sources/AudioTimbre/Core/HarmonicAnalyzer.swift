@@ -38,8 +38,9 @@ public struct Harmony: Codable, Hashable, Sendable {
     /// the same kick reading "F major" would not be.
     public var summary: String {
         let classes = dominantPitchClasses.joined(separator: " ")
-        return String(format: "pitch classes: %@ - salience %.1f over %d frames",
-                      classes.isEmpty ? "none" : classes, chroma.salience, chroma.frames)
+        return String(
+            format: "pitch classes: %@ - salience %.1f over %d frames",
+            classes.isEmpty ? "none" : classes, chroma.salience, chroma.frames)
     }
 }
 
@@ -77,8 +78,10 @@ public enum HarmonicAnalyzer {
     ///
     /// - Parameter segments: start and end times in seconds. Spans past the end of the audio
     ///   and zero-length spans are skipped.
-    public static func analyze(channels: [[Float]], sampleRate: Double,
-                               segments: [ClosedRange<Double>]) throws -> [Harmony] {
+    public static func analyze(
+        channels: [[Float]], sampleRate: Double,
+        segments: [ClosedRange<Double>]
+    ) throws -> [Harmony] {
         guard sampleRate > 0 else { throw AudioTimbreError.invalidSampleRate(sampleRate) }
         let mono = AudioDecoder.mono(channels)
         guard !mono.isEmpty else {
@@ -89,8 +92,11 @@ public enum HarmonicAnalyzer {
             let start = max(0, Int(span.lowerBound * sampleRate))
             let end = min(mono.count, Int(span.upperBound * sampleRate))
             guard end > start else { return nil }
-            guard let chroma = ChromaAnalysis.measure(Array(mono[start..<end]),
-                                                      sampleRate: sampleRate) else { return nil }
+            guard
+                let chroma = ChromaAnalysis.measure(
+                    Array(mono[start..<end]),
+                    sampleRate: sampleRate)
+            else { return nil }
             return Harmony(chroma: chroma)
         }
     }

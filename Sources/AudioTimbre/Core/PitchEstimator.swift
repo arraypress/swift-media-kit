@@ -102,20 +102,24 @@ public enum PitchEstimator {
 
         var last = Estimate(pitch: nil, confidence: 0, rejection: .noPeak)
         for seconds in windowLadder {
-            last = estimate(samples, sampleRate: sampleRate, centroidHz: centroidHz,
-                            windowSeconds: seconds)
+            last = estimate(
+                samples, sampleRate: sampleRate, centroidHz: centroidHz,
+                windowSeconds: seconds)
             if last.pitch != nil { return last }
         }
         return last
     }
 
     /// One pass at a single window length.
-    static func estimate(_ samples: [Float], sampleRate: Double, centroidHz: Double,
-                         windowSeconds: Double) -> Estimate {
+    static func estimate(
+        _ samples: [Float], sampleRate: Double, centroidHz: Double,
+        windowSeconds: Double
+    ) -> Estimate {
         let minimumLag = max(1, Int(sampleRate / maximumHz))
         let idealMaximumLag = Int(sampleRate / minimumHz)
-        let window = loudestWindow(samples, sampleRate: sampleRate,
-                                   length: Int(windowSeconds * sampleRate))
+        let window = loudestWindow(
+            samples, sampleRate: sampleRate,
+            length: Int(windowSeconds * sampleRate))
 
         // Only half a window can ever be a period, so a short file searches a narrower
         // range rather than being refused — the lowest pitch it could detect simply rises.

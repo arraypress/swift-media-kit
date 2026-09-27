@@ -68,10 +68,11 @@ final class Spectrum {
         self.frameSize = frameSize
         self.half = frameSize / 2
         self.fft = fft
-        self.window = vDSP.window(ofType: Float.self,
-                                  usingSequence: .hanningDenormalized,
-                                  count: frameSize,
-                                  isHalfWindow: false)
+        self.window = vDSP.window(
+            ofType: Float.self,
+            usingSequence: .hanningDenormalized,
+            count: frameSize,
+            isHalfWindow: false)
         self.windowed = [Float](repeating: 0, count: frameSize)
         self.realIn = [Float](repeating: 0, count: half)
         self.imagIn = [Float](repeating: 0, count: half)

@@ -65,7 +65,8 @@ enum Corpus {
     /// OS rather than a hand-kept list. Filtered to actual images: the list includes PDF.
     static var writableImageTypes: [UTType] {
         let identifiers = CGImageDestinationCopyTypeIdentifiers() as? [String] ?? []
-        return identifiers
+        return
+            identifiers
             .compactMap { UTType($0) }
             .filter { $0.conforms(to: .image) && $0.preferredFilenameExtension != nil }
     }
@@ -84,25 +85,27 @@ enum Corpus {
         for type in writableImageTypes {
             guard let ext = type.preferredFilenameExtension else { continue }
             let url = directory.appendingPathComponent("image-\(ext).\(ext)")
-            guard let destination = CGImageDestinationCreateWithURL(
-                url as CFURL, type.identifier as CFString, 1, nil
-            ) else { continue }
+            guard
+                let destination = CGImageDestinationCreateWithURL(
+                    url as CFURL, type.identifier as CFString, 1, nil
+                )
+            else { continue }
 
             // Every format is handed the same metadata. Most ignore most of
             // it, which is itself worth knowing.
             let properties: [CFString: Any] = [
                 kCGImagePropertyTIFFDictionary: [
                     kCGImagePropertyTIFFMake: "Nikon",
-                    kCGImagePropertyTIFFModel: "NIKON Z 6"
+                    kCGImagePropertyTIFFModel: "NIKON Z 6",
                 ] as [CFString: Any],
                 kCGImagePropertyExifDictionary: [
                     kCGImagePropertyExifLensModel: "NIKKOR Z 24-70mm f/4 S",
-                    kCGImagePropertyExifDateTimeOriginal: "2026:06:27 13:42:11"
-                ] as [CFString: Any]
+                    kCGImagePropertyExifDateTimeOriginal: "2026:06:27 13:42:11",
+                ] as [CFString: Any],
             ]
             CGImageDestinationAddImage(destination, image, properties as CFDictionary)
             guard CGImageDestinationFinalize(destination),
-                  FileManager.default.fileExists(atPath: url.path)
+                FileManager.default.fileExists(atPath: url.path)
             else { continue }
             samples.append(ImageSample(type: type, url: url))
         }
@@ -140,7 +143,7 @@ enum Corpus {
         ("pcm.aiff", ["-vn", "-c:a", "pcm_s16be"], .audio, true),
         ("flac.flac", ["-vn", "-c:a", "flac"], .audio, true),
         ("opus.opus", ["-vn", "-c:a", "libopus"], .audio, false),
-        ("pcm.caf", ["-vn", "-c:a", "pcm_s16le"], .audio, false)
+        ("pcm.caf", ["-vn", "-c:a", "pcm_s16le"], .audio, false),
     ]
 
     /// Generates every recipe ffmpeg can complete, returning what it produced.
@@ -153,7 +156,7 @@ enum Corpus {
             var arguments = [
                 "-hide_banner", "-loglevel", "error", "-y",
                 "-f", "lavfi", "-i", "testsrc=size=\(videoSize.width)x\(videoSize.height):rate=25:duration=\(seconds)",
-                "-f", "lavfi", "-i", "sine=frequency=440:duration=\(seconds)"
+                "-f", "lavfi", "-i", "sine=frequency=440:duration=\(seconds)",
             ]
             arguments += recipe.arguments
             arguments += [
@@ -164,13 +167,14 @@ enum Corpus {
                 "-metadata", "date=\(Tags.year)",
                 "-metadata", "track=\(Tags.track)",
                 "-metadata", "comment=\(Tags.comment)",
-                url.path
+                url.path,
             ]
 
             guard run(ffmpeg, arguments), FileManager.default.fileExists(atPath: url.path) else { continue }
-            samples.append(MediaSample(
-                name: recipe.name, url: url, expectedKind: recipe.kind, carriesTags: recipe.tags
-            ))
+            samples.append(
+                MediaSample(
+                    name: recipe.name, url: url, expectedKind: recipe.kind, carriesTags: recipe.tags
+                ))
         }
         return samples
     }

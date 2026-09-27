@@ -102,12 +102,13 @@ public enum SpectralFeatures {
         }
 
         guard let low = centroids.min(), let high = centroids.max() else { return nil }
-        return Shape(centroidHz: median(centroids),
-                     centroidRangeHz: min(low, high)...max(low, high),
-                     bandwidthHz: median(bandwidths),
-                     rolloffHz: median(rolloffs),
-                     flatness: median(flatnesses),
-                     frames: centroids.count)
+        return Shape(
+            centroidHz: median(centroids),
+            centroidRangeHz: min(low, high)...max(low, high),
+            bandwidthHz: median(bandwidths),
+            rolloffHz: median(rolloffs),
+            flatness: median(flatnesses),
+            frames: centroids.count)
     }
 
     /// The four shape figures for one magnitude spectrum, or `nil` if it is silent.
@@ -116,9 +117,10 @@ public enum SpectralFeatures {
     ///   - magnitudes: bins from a real FFT, bin 0 first.
     ///   - binWidth: Hz per bin.
     static func shape(of magnitudes: [Float], binWidth: Double)
-        -> (centroid: Double, bandwidth: Double, rolloff: Double, flatness: Double)? {
+        -> (centroid: Double, bandwidth: Double, rolloff: Double, flatness: Double)?
+    {
         guard magnitudes.count > 1 else { return nil }
-        let bins = magnitudes[1...]                 // bin 0 is DC — see the file note.
+        let bins = magnitudes[1...]  // bin 0 is DC — see the file note.
         guard bins.contains(where: { $0 > silentFrameFloor }) else { return nil }
 
         var weighted = 0.0
