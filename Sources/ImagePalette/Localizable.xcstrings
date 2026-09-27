@@ -1,0 +1,112 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ is not an image ImageIO can read" : {
+      "comment" : "Image palette error; the value is a file path. ImageIO is the Apple framework name.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ ist kein Bild, das ImageIO lesen kann"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ no es una imagen que ImageIO pueda leer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ n’est pas une image lisible par ImageIO"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ は ImageIO で読み取れる画像ではありません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@은(는) ImageIO가 읽을 수 있는 이미지가 아닙니다"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ não é uma imagem que o ImageIO consiga ler"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ — не изображение, которое может прочитать ImageIO"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ 不是 ImageIO 可读取的图像"
+          }
+        }
+      }
+    },
+    "the image has no opaque pixels to sample" : {
+      "comment" : "Image palette error: every pixel is transparent, so no colours can be taken from it.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "das Bild hat keine deckenden Pixel zum Abtasten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "la imagen no tiene píxeles opacos que muestrear"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "l’image n’a aucun pixel opaque à échantillonner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "画像にサンプリングできる不透明なピクセルがありません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "이미지에 샘플링할 불투명한 픽셀이 없습니다"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "a imagem não tem pixels opacos para amostrar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "в изображении нет непрозрачных пикселей для выборки"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "图像没有可供取样的不透明像素"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
