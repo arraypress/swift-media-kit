@@ -2,8 +2,6 @@
 //  FileSystemRaw.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Every resource value the file system will answer, namespaced `fs`.
 //
 //  The obvious implementation asks for all 127 declared keys and reports
@@ -25,6 +23,9 @@
 //  requesting `[.fileSizeKey, .directoryEntryCountKey]` on the same file gives
 //  nil. So it is asked for on its own, and only for directories, where it is
 //  the only thing it can mean.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

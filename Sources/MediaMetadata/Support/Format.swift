@@ -2,9 +2,10 @@
 //  Format.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Turning a number a camera wrote into the string a person expects to read.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

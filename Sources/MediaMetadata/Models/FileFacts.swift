@@ -2,9 +2,10 @@
 //  FileFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Everything read about one file, in one pass.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

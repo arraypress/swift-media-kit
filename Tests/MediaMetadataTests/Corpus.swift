@@ -1,8 +1,6 @@
 //
 //  Corpus.swift
-//  MediaMetadata
-//
-//  Created by David Sherlock on 9/15/26.
+//  MediaMetadataTests
 //
 //  A corpus of real files in real formats, generated rather than committed.
 //
@@ -11,6 +9,9 @@
 //  because AVFoundation writes only the handful of containers Apple ships an
 //  encoder for, and a reader that has only ever seen Apple's own output is not
 //  a reader anybody can point at a folder.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

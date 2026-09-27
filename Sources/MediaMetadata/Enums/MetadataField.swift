@@ -2,8 +2,6 @@
 //  MetadataField.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  The catalogue of everything this package can answer about a file.
 //
 //  One flat list rather than a type per media kind, because the caller's
@@ -11,6 +9,9 @@
 //  recordings, and the answer is one table with a column per field and an
 //  empty cell where a field does not apply. A file is never asked whether it
 //  "is an image" — it is asked for `camera`, and says nothing if it has none.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

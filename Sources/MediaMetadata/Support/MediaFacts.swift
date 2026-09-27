@@ -2,9 +2,10 @@
 //  MediaFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Tags and stream facts for anything AVFoundation will open.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

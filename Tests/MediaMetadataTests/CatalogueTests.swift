@@ -1,12 +1,13 @@
 //
 //  CatalogueTests.swift
-//  MediaMetadata
-//
-//  Created by David Sherlock on 9/15/26.
+//  MediaMetadataTests
 //
 //  The field catalogue is what a column chooser, a `--help` listing and a
 //  table renderer all read, so its integrity is worth asserting rather than
 //  assuming.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import XCTest

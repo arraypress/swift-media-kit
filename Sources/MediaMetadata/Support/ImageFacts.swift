@@ -2,8 +2,6 @@
 //  ImageFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Everything ImageIO knows, in one open.
 //
 //  Measured at ~0.32 ms per image, and it parallelises about tenfold across
@@ -11,6 +9,9 @@
 //  it works on a volume Spotlight has never indexed. It is also the only route
 //  to the lens: `kMDItemAcquisitionModel` gives the camera body and there is
 //  no Spotlight attribute for the glass in front of it.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

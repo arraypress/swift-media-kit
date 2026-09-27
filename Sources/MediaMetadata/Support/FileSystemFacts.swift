@@ -2,10 +2,11 @@
 //  FileSystemFacts.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  The fields that come from the directory entry, which the kernel has already
 //  walked. 107,765 files answered in 3.9 s — nothing else here is close.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

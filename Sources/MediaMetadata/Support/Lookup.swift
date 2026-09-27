@@ -2,12 +2,13 @@
 //  Lookup.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  EXIF stores settings as small integers and the SDK names only the keys, not
 //  what the numbers mean — so the tables live here, taken from the EXIF
 //  specification rather than guessed. A column reading "5" where it should
 //  read "Pattern" is worse than an empty one, because it looks like data.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

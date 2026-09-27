@@ -1,11 +1,12 @@
 //
 //  CorpusTests.swift
-//  MediaMetadata
-//
-//  Created by David Sherlock on 9/15/26.
+//  MediaMetadataTests
 //
 //  Pointed at every format this machine can produce, rather than at the two or
 //  three a developer thinks of.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

@@ -2,8 +2,6 @@
 //  Numbers.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Reading a number out of a Core Foundation dictionary without caring which
 //  numeric type the format happened to use.
 //
@@ -13,6 +11,9 @@
 //  `Int` is `nil`, silently. Every numeric tag has the same exposure: a camera
 //  writing ISO as a short and another writing it as a rational would disagree
 //  about whether the column has any data in it.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

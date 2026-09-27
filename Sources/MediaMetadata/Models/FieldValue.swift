@@ -2,8 +2,6 @@
 //  FieldValue.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Values stay typed all the way to the renderer.
 //
 //  The temptation is to keep everything as a formatted string, which is what
@@ -11,6 +9,9 @@
 //  above "10 MB" and a JSON document where every number is quoted. So a size
 //  is an integer until something decides to print it, and the decision about
 //  how to print it belongs to whatever is doing the printing.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  FieldSource.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  What has to be opened to answer a field — which is the whole performance
 //  story of this package.
 //
@@ -15,6 +13,9 @@
 //
 //  So a reader that always reads everything is 14× slower than one that reads
 //  what was asked for, and the fix is to know, per field, what it costs.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

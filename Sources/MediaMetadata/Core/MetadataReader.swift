@@ -2,8 +2,6 @@
 //  MetadataReader.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  One pass per file, and only the passes the caller paid for.
 //
 //  The older design in the app this was lifted from asked for each placeholder
@@ -16,6 +14,9 @@
 //  filesystem fields alone take 3.9 s; the same tree through Spotlight takes
 //  54.8 s; opening every image for its EXIF costs about 0.32 ms each and
 //  parallelises roughly tenfold.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  MediaRaw.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Every metadata item AVFoundation will hand over, from every key space the
 //  file actually carries.
 //
@@ -12,6 +10,9 @@
 //  free to carry keys outside all of them. So rather than asking for a list of
 //  identifiers, this asks the asset which formats it has and reads all of
 //  each, which covers the declared keys and the undeclared ones alike.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

@@ -2,8 +2,6 @@
 //  ImageRaw.swift
 //  MediaMetadata
 //
-//  Created by David Sherlock on 9/15/26.
-//
 //  Every property ImageIO returns, namespaced and typed, with nothing dropped.
 //
 //  The macOS 27 SDK declares 676 image property constants across 26
@@ -16,6 +14,9 @@
 //  So nothing is transcribed. Whatever `CGImageSourceCopyPropertiesAtIndex`
 //  hands back is walked and flattened, which makes coverage a property of the
 //  SDK rather than of this file.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

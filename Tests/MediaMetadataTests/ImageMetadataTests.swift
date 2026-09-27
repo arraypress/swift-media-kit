@@ -1,11 +1,12 @@
 //
 //  ImageMetadataTests.swift
-//  MediaMetadata
-//
-//  Created by David Sherlock on 9/15/26.
+//  MediaMetadataTests
 //
 //  Written with known values, read back, compared. Anything that disagrees is
 //  a bug in the reader rather than a surprise in somebody's photograph.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import ImageIO

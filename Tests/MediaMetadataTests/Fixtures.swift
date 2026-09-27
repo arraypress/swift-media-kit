@@ -1,11 +1,12 @@
 //
 //  Fixtures.swift
-//  MediaMetadata
-//
-//  Created by David Sherlock on 9/15/26.
+//  MediaMetadataTests
 //
 //  Files written with metadata this test suite chose, so every assertion has a
 //  known right answer rather than whatever happened to be on the disk.
+//
+//  Created by David Sherlock on 9/15/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation
