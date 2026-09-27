@@ -9,21 +9,13 @@
 //  folding it into every analysis would make a thousand-file pack sweep eight times slower
 //  for an answer most callers browsing a drum library do not want.
 //
-//  THERE IS NO CHORD NAMER HERE, and that is a decision taken AFTER building one and
-//  measuring it. A chord namer over these profiles — 108 templates, cosine matched, gated on
-//  salience and on confidence — named **nine of twenty kick drums as F**, several with a
-//  salience in the hundreds of thousands, because a kick is one strong fundamental and
-//  nothing is more salient than that. Meanwhile the pitched one-shots it did name mostly
-//  carried ONE pitch class: it was reading a single note's harmonic series, which is a root,
-//  a fifth and a major third, as a major triad. So it was not identifying chords at all —
-//  it was identifying fundamentals, which ``PitchEstimator`` already does and does better,
-//  against a filename ground truth of 58 out of 60.
-//
-//  Recover it with `git log --all -- Sources/AudioTimbre/Core/ChordEstimator.swift` if a
-//  future version has something the templates can stand on: beat-synchronous segmentation,
-//  a bass-aware template set, or a trained model. What it needs is not a better threshold —
-//  every threshold available over this feature was measured and none of them separate a
-//  kick drum from a chord.
+//  THERE IS NO CHORD NAMER, by measurement. Template matching over these profiles names a
+//  kick drum as a chord (one strong fundamental is the most salient thing there is) and reads
+//  a single note's harmonic series — root, fifth, major third — as a major triad: it finds
+//  fundamentals, which ``PitchEstimator`` already does better. No threshold over this feature
+//  separates a kick from a chord; a namer needs beat-synchronous segmentation, a bass-aware
+//  template set or a trained model (the measured attempt: `git log --all --
+//  Sources/AudioTimbre/Core/ChordEstimator.swift`).
 //
 //  Created by David Sherlock on 9/11/26.
 //  Copyright © 2026 ArrayPress Limited. MIT licence.

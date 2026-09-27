@@ -4,12 +4,10 @@
 //
 //  Measured against a real sample pack, where the filenames carry the answers.
 //
-//  Synthetic signals prove the maths and cannot prove everything. Two of the bugs found
-//  while building this were invisible to every generated tone and obvious on the first
-//  commercial pack it was pointed at: a pitch floor too high for a sub bass, and a
-//  fallback that returned the edge of the search range as if it were a measurement. A
-//  third — the texture boundaries being wrong for this implementation — was only visible
-//  across hundreds of files at once.
+//  Synthetic signals prove the maths and cannot prove everything: a pitch floor too high for
+//  a sub bass, a fallback returning the edge of the search range as a measurement, and
+//  texture boundaries wrong for this implementation are invisible to generated tones and
+//  obvious across a real pack.
 //
 //  These assert RATES, not single files. One kick proves nothing: some kicks are pitched
 //  and some are not, and a test pinned to whichever file the directory walk happened to
