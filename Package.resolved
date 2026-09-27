@@ -1,0 +1,15 @@
+{
+  "originHash" : "933f49d21d7fd27fd20c70f37c07363674d1e2079cdf0a7561b2bbee6ea842ae",
+  "pins" : [
+    {
+      "identity" : "swift-codec-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arraypress/swift-codec-kit.git",
+      "state" : {
+        "revision" : "b4c090395538f4f6557eef9c3de08bcdb0db9a0e",
+        "version" : "0.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

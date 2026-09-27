@@ -188,7 +188,7 @@ stopping the batch.
 ## Installation
 
 ```swift
-.package(url: "https://github.com/arraypress/swift-media-metadata.git", from: "0.1.0")
+.package(url: "https://github.com/arraypress/swift-media-kit.git", from: "0.1.0")
 ```
 
 ## Requirements
