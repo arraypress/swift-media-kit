@@ -4,11 +4,8 @@
 //
 //  One pass per file, and only the passes the caller paid for.
 //
-//  The older design in the app this was lifted from asked for each placeholder
-//  separately as a file arrived, building a fresh `CGImageSource` or
-//  `AVURLAsset` for every one of them. This reads a file once: one set of
-//  resource values, one image source, one asset — and skips each of those
-//  entirely when nothing asked for anything it answers.
+//  A file is read once — one set of resource values, one image source, one asset — and
+//  each of those is skipped entirely when nothing asked for anything it answers.
 //
 //  That skipping is the whole performance story. Measured over 107,765 files:
 //  filesystem fields alone take 3.9 s; the same tree through Spotlight takes
