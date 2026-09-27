@@ -23,8 +23,8 @@ public enum MetadataError: Error, Equatable, Sendable, LocalizedError {
 
     public var errorDescription: String? {
         switch self {
-        case .notFound(let path): "No file at \(path)"
-        case .unreadable(let path): "Cannot read \(path)"
+        case .notFound(let path): String(localized: "No file at \(path)", bundle: .module)
+        case .unreadable(let path): String(localized: "Cannot read \(path)", bundle: .module)
         }
     }
 }

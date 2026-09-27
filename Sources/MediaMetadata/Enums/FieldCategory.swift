@@ -44,16 +44,16 @@ public enum FieldCategory: String, Sendable, CaseIterable, Codable {
     /// A heading fit to print above the group.
     public var label: String {
         switch self {
-        case .general: "General"
-        case .dates: "Dates"
-        case .image: "Image"
-        case .camera: "Camera"
+        case .general: String(localized: "General", bundle: .module, comment: "Metadata group heading: facts true of every file.")
+        case .dates: String(localized: "Dates", bundle: .module, comment: "Metadata group heading: timestamps.")
+        case .image: String(localized: "Image", bundle: .module, comment: "Metadata group heading or kind of file: a picture.")
+        case .camera: String(localized: "Camera", bundle: .module, comment: "Metadata group heading: camera and exposure settings.")
         case .iptc: "IPTC"
-        case .location: "Location"
-        case .audio: "Audio"
-        case .video: "Video"
-        case .document: "Document"
-        case .checksum: "Checksums"
+        case .location: String(localized: "Location", bundle: .module, comment: "Metadata group heading: where a photo was taken.")
+        case .audio: String(localized: "Audio", bundle: .module, comment: "Metadata group heading or kind of file: sound.")
+        case .video: String(localized: "Video", bundle: .module, comment: "Metadata group heading or kind of file: moving pictures.")
+        case .document: String(localized: "Document", bundle: .module, comment: "Metadata group heading or kind of file: a PDF document.")
+        case .checksum: String(localized: "Checksums", bundle: .module, comment: "Metadata group heading: digests of the file's bytes.")
         }
     }
 }

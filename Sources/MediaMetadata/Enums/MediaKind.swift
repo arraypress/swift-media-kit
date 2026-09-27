@@ -77,12 +77,12 @@ public enum MediaKind: String, Sendable, CaseIterable, Codable {
     /// What to call it in a listing.
     public var label: String {
         switch self {
-        case .image: "Image"
-        case .audio: "Audio"
-        case .video: "Video"
-        case .document: "Document"
-        case .folder: "Folder"
-        case .other: "Other"
+        case .image: String(localized: "Image", bundle: .module, comment: "Metadata group heading or kind of file: a picture.")
+        case .audio: String(localized: "Audio", bundle: .module, comment: "Metadata group heading or kind of file: sound.")
+        case .video: String(localized: "Video", bundle: .module, comment: "Metadata group heading or kind of file: moving pictures.")
+        case .document: String(localized: "Document", bundle: .module, comment: "Metadata group heading or kind of file: a PDF document.")
+        case .folder: String(localized: "Folder", bundle: .module, comment: "Metadata field label: the folder containing the file.")
+        case .other: String(localized: "Other", bundle: .module, comment: "Kind of file: anything that is not an image, audio, video, document or folder.")
         }
     }
 }

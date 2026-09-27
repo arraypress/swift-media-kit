@@ -36,7 +36,11 @@ final class FileSystemMetadataTests: XCTestCase {
         XCTAssertEqual(facts.byteCount, 10)
         XCTAssertNotNil(facts.values[.created])
         XCTAssertNotNil(facts.values[.modified])
-        XCTAssertEqual(facts.string(for: .kind), "Plain Text Document")
+        // The kind is the system's own description of the type, whose wording varies by macOS
+        // release and language ("Plain Text Document", "text").
+        let systemKind = try url.resourceValues(forKeys: [.localizedTypeDescriptionKey]).localizedTypeDescription
+        XCTAssertNotNil(systemKind)
+        XCTAssertEqual(facts.string(for: .kind), systemKind)
     }
 
     func testRelativePathIsBuiltFromTheScanRoot() async throws {
