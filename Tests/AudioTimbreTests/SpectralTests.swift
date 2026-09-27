@@ -2,9 +2,10 @@
 //  SpectralTests.swift
 //  AudioTimbreTests
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Centroid and flatness, against signals whose spectra are known in advance.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import XCTest

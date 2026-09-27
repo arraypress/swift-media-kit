@@ -2,9 +2,10 @@
 //  StereoTests.swift
 //  AudioTimbreTests
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Correlation and Side/Mid, against channel pairs whose relationship is constructed.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import XCTest

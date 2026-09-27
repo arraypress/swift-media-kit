@@ -2,8 +2,6 @@
 //  HarmonicAnalyzer.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  The harmonic entry point: which of the twelve pitch classes are in this.
 //
 //  SEPARATE FROM ``TimbreAnalyzer`` rather than a field on ``Timbre``, and the reason is
@@ -26,6 +24,9 @@
 //  a bass-aware template set, or a trained model. What it needs is not a better threshold —
 //  every threshold available over this feature was measured and none of them separate a
 //  kick drum from a chord.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

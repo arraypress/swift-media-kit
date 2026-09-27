@@ -2,8 +2,6 @@
 //  AudioTimbreError.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Every way an analysis can refuse, each naming what it saw.
 //
 //  There is deliberately no "too short" case. A duration floor is the failure mode this
@@ -11,6 +9,9 @@
 //  MusicUnderstanding needs two beats, so a 400 ms one-shot comes back empty from both.
 //  Direct measurement has no such floor — a spectral centroid is well defined over 64
 //  samples — so the only refusals here are for audio that is absent, unreadable or silent.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

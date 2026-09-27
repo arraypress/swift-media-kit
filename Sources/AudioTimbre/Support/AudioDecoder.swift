@@ -2,8 +2,6 @@
 //  AudioDecoder.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  A file to float samples, one array per channel. The only part of this library that
 //  touches AVFoundation.
 //
@@ -12,6 +10,9 @@
 //  whose centroid must come back at its own frequency, noise whose flatness must approach
 //  one. That is not a convenience; it is the only way to tell a correct implementation
 //  from one that merely returns plausible numbers.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

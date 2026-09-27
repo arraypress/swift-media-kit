@@ -2,8 +2,6 @@
 //  StereoImage.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  How wide a stereo file is, as two numbers and no adjective.
 //
 //  Note what is missing: there is no `StereoWidth` enum beside these figures, while
@@ -13,6 +11,9 @@
 //  stereo width no such set was available, so inventing "narrow / wide / very wide" here
 //  would be dressing a guess in the same clothes as a measurement. The numbers are exact;
 //  when a boundary set exists that can be cited, a bucket can be added.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

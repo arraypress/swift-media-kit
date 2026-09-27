@@ -2,8 +2,6 @@
 //  SampleStream.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/22/26.
-//
 //  Streams a file's samples as 16-bit integers through a sink, never holding the file.
 //
 //  `AudioDecoder` reads a whole file into Float arrays, which is right for a one-shot and
@@ -11,6 +9,9 @@
 //  envelope and the level check only need each sample once, so they read through here —
 //  an `AVAssetReader` handing out blocks of Int16, converted or resampled by the reader
 //  itself, capped at `maxSeconds`.
+//
+//  Created by David Sherlock on 9/22/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

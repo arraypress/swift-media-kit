@@ -2,8 +2,6 @@
 //  Loudness.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Absolute level, in dB relative to full scale.
 //
 //  Both figures are here for a specific reason found in practice rather than theory: raw
@@ -14,6 +12,9 @@
 //
 //  Peak alone will not do it: a sharp transient and a sustained pad can share a peak and
 //  be nowhere near each other in perceived level.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Accelerate

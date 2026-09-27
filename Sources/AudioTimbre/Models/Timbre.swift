@@ -2,8 +2,6 @@
 //  Timbre.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Everything measured about one piece of audio, and the sentence that reads it out.
 //
 //  The rule this type exists to enforce: EVERY WORD SHIPS BESIDE ITS NUMBER. ``brightness``
@@ -16,6 +14,9 @@
 //  swift-music-analysis already carries trained models for them, measured on held-out
 //  packs — and a describer that guessed at them would be asserting with far less evidence
 //  than the thing next door.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

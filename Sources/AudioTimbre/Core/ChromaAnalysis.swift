@@ -2,8 +2,6 @@
 //  ChromaAnalysis.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Folding a spectrum onto the twelve pitch classes.
 //
 //  THE FRAME IS 16,384 SAMPLES, eight times the one the timbre measurements use, and the
@@ -23,6 +21,9 @@
 //  looking like every other one. librosa's chroma uses the whole spectrum and leans on its
 //  filterbank weighting instead; bounding the range does the same job and is easier to
 //  reason about when a result looks wrong.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

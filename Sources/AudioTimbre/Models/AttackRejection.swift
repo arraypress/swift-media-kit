@@ -2,8 +2,6 @@
 //  AttackRejection.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Why a time-to-peak is not an attack.
 //
 //  ``Timbre/timeToPeakMs`` is always measured and always means the same thing: how far
@@ -16,6 +14,9 @@
 //  pitch estimate is: named when the shape supports it, refused with a reason when it
 //  does not. "No attack" and "an attack of 3 seconds" are very different claims, and only
 //  one of them is true of a pad loop.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  Envelope.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  How a sound moves over time: how fast it arrives, how long it takes to leave.
 //
 //  TIME-TO-PEAK IS NOT ALWAYS AN ATTACK, and this is the only place that can tell. On a
@@ -24,6 +22,9 @@
 //  The overlap costs nothing: a prefix sum of squares makes any window's energy a single
 //  subtraction, so the whole envelope is one pass over the signal regardless of how far
 //  the windows overlap.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

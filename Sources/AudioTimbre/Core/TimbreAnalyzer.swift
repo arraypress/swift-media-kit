@@ -2,8 +2,6 @@
 //  TimbreAnalyzer.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  The entry point: audio in, measured facts out.
 //
 //  There is no minimum duration anywhere in here, and that is the reason the library
@@ -17,6 +15,9 @@
 //  What it will not do is name the sound. Classification belongs to a trained model with
 //  held-out accuracy behind it, and swift-music-analysis already carries one. Measuring
 //  and guessing are different jobs and this library only does the first.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

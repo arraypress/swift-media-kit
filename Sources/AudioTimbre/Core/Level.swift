@@ -2,13 +2,14 @@
 //  Level.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/22/26.
-//
 //  Peak level and rail hits, streamed at the file's own rate and channels.
 //
 //  `Loudness` measures arrays already in memory; this reads the file. No conversion: a
 //  16-bit sample that reads 32767 is one the file itself put at the rail, and counting
 //  those is the whole point.
+//
+//  Created by David Sherlock on 9/22/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import AVFoundation

@@ -2,8 +2,6 @@
 //  SpectralFeatures.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Where the energy sits (centroid) and how tone-like it is (flatness), frame by frame.
 //
 //  FRAME-WISE, AND THE MEDIAN — not one transform over the whole file. A single FFT across
@@ -22,6 +20,9 @@
 //  of −0.875. ``Spectrum`` subtracts each frame's mean before windowing, which removes the
 //  cause; bin 0 is skipped here as well, because the mean of a windowed frame is never
 //  exactly zero and the residue sits at the one frequency that drags a centroid hardest.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

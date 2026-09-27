@@ -2,9 +2,10 @@
 //  LevelReport.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/22/26.
-//
 //  How loud a file gets and whether it hit the rails.
+//
+//  Created by David Sherlock on 9/22/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  StereoAnalysis.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  The relationship between two channels: how alike they are, and how much is not shared.
 //
 //  Both figures are needed because each hides something the other shows. Correlation says
@@ -12,6 +10,9 @@
 //  reads near 1.0, the same as true dual mono. Side/Mid says how much material sits off
 //  centre but nothing about polarity — a wide mix and a mix with one channel inverted can
 //  report similar ratios while one of them collapses to nothing when summed.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Accelerate

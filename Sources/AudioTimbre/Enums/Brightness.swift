@@ -2,8 +2,6 @@
 //  Brightness.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  A word for where a sound's energy sits, bucketed from the spectral centroid.
 //
 //  The boundaries are INHERITED, not derived here. They come from serum-mcp's
@@ -15,6 +13,9 @@
 //  Which is why the raw centroid always travels beside the word — see
 //  ``Timbre/spectralCentroidHz``. The number is the measurement; this is a convenience
 //  for reading it. Anyone who disagrees with a boundary still has the Hz.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

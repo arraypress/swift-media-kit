@@ -2,8 +2,6 @@
 //  TestSignals.swift
 //  AudioTimbreTests
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Signals whose answers are known before they are measured.
 //
 //  This is the whole reason the measurements take `[[Float]]` rather than a file URL. A
@@ -16,6 +14,9 @@
 //  The reference implementation this library borrows its bucket boundaries from was
 //  validated, in its author's own words, as "a sanity check, not a rigorous evaluation"
 //  against five one-shots. This is the part that can be done better.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

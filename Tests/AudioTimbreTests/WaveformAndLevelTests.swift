@@ -2,11 +2,12 @@
 //  WaveformAndLevelTests.swift
 //  AudioTimbreTests
 //
-//  Created by David Sherlock on 9/22/26.
-//
 //  The streamed readers against WAV files written here with known samples: a ramp climbs
 //  bin by bin, a steady sine is flat at full height, silence is flat at zero; the level of a
 //  ramp, a rail-to-rail square, and silence.
+//
+//  Created by David Sherlock on 9/22/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  Texture.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  A word for how tone-like or noise-like a sound is, bucketed from spectral flatness.
 //
 //  Flatness is the ratio of the geometric to the arithmetic mean of the magnitude
@@ -20,12 +18,15 @@
 //
 //  Median flatness per class, 30 files each (n=240):
 //
-//      sub bass 0.001   kick 0.003   clap 0.071   ride 0.162
-//      crash 0.177      open hat 0.234   snare 0.380   closed hat 0.601
+//  sub bass 0.001   kick 0.003   clap 0.071   ride 0.162
+//  crash 0.177      open hat 0.234   snare 0.380   closed hat 0.601
 //
 //  0.025 separates the pitched drums from the clap family (kick p90 is 0.022, clap p10 is
 //  0.033 — the gap is real, not a coin toss), and 0.25 separates the clap family from the
 //  snares and closed hats. Both sit in a gap between clusters rather than through one.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

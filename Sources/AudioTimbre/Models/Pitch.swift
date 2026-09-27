@@ -2,8 +2,6 @@
 //  Pitch.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  A fundamental that survived the gate, and the reasons one might not.
 //
 //  ``PitchRejection`` exists because "no pitch" and "a pitch I do not believe" are
@@ -12,6 +10,9 @@
 //  onto a transient artifact ten times higher. Collapsing both to `nil` throws away the
 //  more interesting half, so the confidence is reported either way and this says which
 //  test failed.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation

@@ -2,8 +2,6 @@
 //  RealFileTests.swift
 //  AudioTimbreTests
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  Measured against a real sample pack, where the filenames carry the answers.
 //
 //  Synthetic signals prove the maths and cannot prove everything. Two of the bugs found
@@ -20,10 +18,13 @@
 //
 //  Gated because the audio is not in the repository and cannot be:
 //
-//      AUDIOTIMBRE_SAMPLES=~/Samples/SomePack swift test
+//  AUDIOTIMBRE_SAMPLES=~/Samples/SomePack swift test
 //
 //  Figures in the assertions were measured on Activa Trance Essentials Volume 2, 30 files
 //  per class. Thresholds sit below the measured rate with room for a different pack.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import XCTest

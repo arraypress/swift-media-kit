@@ -2,8 +2,6 @@
 //  PitchEstimator.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  An autocorrelation fundamental, and the two gates that stop it lying.
 //
 //  THE CENTROID GATE IS THE IMPORTANT PART, and it exists because of a specific documented
@@ -37,6 +35,9 @@
 //  as the best; every longer peak is a multiple of it. The maximum must be interior:
 //  a raw correlation is highest at the shortest lag searched and falls away from it, so
 //  accepting a boundary would hand back the top of that slope instead of a period.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Accelerate

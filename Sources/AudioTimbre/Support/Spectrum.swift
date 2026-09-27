@@ -2,8 +2,6 @@
 //  Spectrum.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  A real FFT over a windowed frame, and the two shape measurements taken from it.
 //
 //  The frame size ADAPTS to the signal rather than being fixed at 2048. A one-shot can
@@ -15,6 +13,9 @@
 //  two that FITS keeps the window matched to real data, at the cost of coarser frequency
 //  resolution on short files — which is the right trade, because a 2,028-sample file has
 //  no fine spectral detail to lose.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Accelerate

@@ -2,8 +2,6 @@
 //  PitchClassProfile.swift
 //  AudioTimbre
 //
-//  Created by David Sherlock on 9/11/26.
-//
 //  How much of each of the twelve pitch classes a piece of audio contains.
 //
 //  Octave-folded on purpose: C2, C4 and C6 all land in the same bin. That is what makes a
@@ -13,6 +11,9 @@
 //
 //  A profile is a MEASUREMENT and is always reported in full. Naming a chord from it is an
 //  interpretation, gated separately — see ``Chord``.
+//
+//  Created by David Sherlock on 9/11/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation
