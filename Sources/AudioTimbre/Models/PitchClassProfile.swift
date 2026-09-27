@@ -66,28 +66,19 @@ public struct PitchClassProfile: Codable, Hashable, Sendable {
             .map { Self.names[$0.offset] }
     }
 
-    /// The strongest class divided by the median class.
+    /// The strongest class divided by the median class — the feature that separates pitched
+    /// material from percussion, which ``concentration`` does not.
     ///
-    /// How far the top of a profile stands above its own middle, and the one feature that
-    /// separates isolated pitched material from percussion — ``concentration`` does not,
-    /// reading 0.02 for a clean A minor loop against 0.03 for a hi-hat.
-    ///
-    /// The MEDIAN is the floor on purpose. A lower percentile was tried and is unusable:
-    /// a kick's three quietest classes are effectively zero, so the ratio ran to infinity
-    /// and beyond two million, putting drums above every pitched sound measured.
-    ///
-    /// The cost of the median is that it falls as a chord gets richer. A four-note chord
-    /// plus its harmonics lights eight of the twelve classes, which puts the median INSIDE
-    /// the chord — so sevenths score lower than the triads they contain, and the gate in
-    /// ``ChordEstimator`` admits triads far more readily than extended chords.
+    /// The MEDIAN, not a lower percentile: a kick's quietest classes are near zero and would send
+    /// the ratio towards infinity. The cost is that richer chords score lower, since a four-note
+    /// chord with harmonics lights eight classes and puts the median inside the chord.
     public var salience: Double {
         let sorted = bins.sorted()
         let peak = bins.max() ?? 0
         guard peak > 0 else { return 0 }
-        // The denominator is floored relative to the peak so the ratio stays finite and
-        // encodable. A single pure tone drives the median to zero — a synthesised kick
-        // does exactly that — and an infinite salience is a value no JSON encoder will
-        // take and no caller can compare. Ten thousand is as high as this needs to say.
+        // Floor the denominator relative to the peak so the ratio stays finite and encodable:
+        // a pure tone drives the median to zero, and JSON cannot encode infinity. 10,000 is
+        // as high as this needs to say.
         let median = max((sorted[5] + sorted[6]) / 2, peak * 1e-4)
         return peak / median
     }

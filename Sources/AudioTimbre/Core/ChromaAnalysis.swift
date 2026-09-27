@@ -83,17 +83,11 @@ public enum ChromaAnalysis {
         return PitchClassProfile(raw: totals, frames: frames)
     }
 
-    /// Fold one magnitude spectrum onto twelve classes, or `nil` if nothing is in range.
+    /// Fold one magnitude spectrum (real FFT bins, bin 0 first; `binWidth` Hz per bin) onto
+    /// twelve classes, or `nil` if nothing is in range.
     ///
-    /// Returns RAW magnitudes, deliberately unnormalised. Normalising each frame to its own
-    /// peak before summing was the first version and it is wrong: it gives a near-silent
-    /// gap between chords exactly as much say as the chord, so a four-bar loop comes back
-    /// with all twelve classes lit and no chord findable in it. Leaving the magnitudes raw
-    /// weights each frame by how much sound is actually in it.
-    ///
-    /// - Parameters:
-    ///   - magnitudes: bins from a real FFT, bin 0 first.
-    ///   - binWidth: Hz per bin.
+    /// Returns RAW magnitudes so each frame weighs by how much sound is in it. Must not
+    /// normalise per frame: near-silent gaps would count as much as chords and light all twelve.
     static func fold(_ magnitudes: [Float], binWidth: Double) -> [Double]? {
         guard binWidth > 0, magnitudes.count > 2 else { return nil }
         // One bin of headroom each side: a local maximum needs both neighbours.
@@ -101,12 +95,9 @@ public enum ChromaAnalysis {
         let last = min(magnitudes.count - 2, Int((maximumHz / binWidth).rounded(.up)))
         guard last > first else { return nil }
 
-        // ONLY SPECTRAL PEAKS VOTE. A played note makes a local maximum; the thousands of
-        // bins between notes carry a noise floor that is individually tiny and collectively
-        // enormous, because each pitch class gathers bins from seven octaves. Summing every
-        // bin let that floor dominate: an A minor loop came back with all twelve classes
-        // between 0.7 and 1.0, and no chord was findable in it at any segment length. Taking
-        // maxima only removes the floor instead of trying to out-weight it.
+        // ONLY SPECTRAL PEAKS VOTE. A note makes a local maximum; the bins between notes carry
+        // a floor that is tiny per bin but, gathered from seven octaves per class, would light
+        // all twelve classes if every bin were summed. Taking maxima removes the floor.
         var ceiling: Float = 0
         for index in first...last where magnitudes[index] > ceiling { ceiling = magnitudes[index] }
         guard ceiling > 0 else { return nil }

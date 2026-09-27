@@ -80,18 +80,11 @@ public enum HarmonicAnalyzer {
         return Harmony(chroma: chroma)
     }
 
-    /// Analyse a run of segments — bars, beats, or anything else a caller has boundaries
-    /// for — returning one reading each.
+    /// Analyse a run of segments — bars, beats, or any caller-supplied boundaries — returning
+    /// one reading each. This library does not track beats, so boundaries come from outside.
     ///
-    /// The boundaries have to come from outside: this library measures spectra and does not
-    /// track beats. `muse --full` reports every beat and bar position.
-    ///
-    /// - Parameters:
-    ///   - channels: one array per channel.
-    ///   - sampleRate: samples per second.
-    ///   - segments: start and end times in seconds. Spans past the end of the audio, and
-    ///     spans of zero length, are skipped. An inverted span cannot reach here —
-    ///     `ClosedRange` traps on construction — so the type does that validation.
+    /// - Parameter segments: start and end times in seconds. Spans past the end of the audio
+    ///   and zero-length spans are skipped.
     public static func analyze(channels: [[Float]], sampleRate: Double,
                                segments: [ClosedRange<Double>]) throws -> [Harmony] {
         guard sampleRate > 0 else { throw AudioTimbreError.invalidSampleRate(sampleRate) }

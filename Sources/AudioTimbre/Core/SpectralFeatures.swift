@@ -54,17 +54,12 @@ public enum SpectralFeatures {
         /// two-tone chord an octave apart can share a centroid and differ here by
         /// hundreds of Hz.
         public let bandwidthHz: Double
-        /// Median per-frame rolloff, Hz — the frequency below which
-        /// ``rolloffPercent`` of the magnitude lies.
+        /// Median per-frame rolloff, Hz — the frequency below which ``rolloffPercent`` of the
+        /// magnitude lies.
         ///
-        /// The ROBUST one of the three, which is the opposite of what it looks like.
-        /// Measured on a 2 kHz tone with white noise mixed under it: rolloff holds at
-        /// 2,024 Hz through hiss at 0.001, 0.003 and 0.010, while the centroid drifts
-        /// 2,000 → 3,093 Hz and the bandwidth goes 49 → 3,679. A centroid is pulled by
-        /// any broadband content because a thousand high bins each contribute their
-        /// frequency; a rolloff ignores a noise floor until it carries a real share of
-        /// the magnitude. Read centroid for brightness INCLUDING the noise, rolloff for
-        /// where the sound itself stops.
+        /// The noise-robust figure: under added hiss a 2 kHz tone's rolloff holds at ~2,024 Hz
+        /// while its centroid drifts past 3 kHz. Read centroid for brightness including noise,
+        /// rolloff for where the sound itself stops.
         public let rolloffHz: Double
         /// Median per-frame flatness, 0…1.
         public let flatness: Double

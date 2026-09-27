@@ -17,6 +17,7 @@
 import AVFoundation
 import Foundation
 
+/// Block-by-block 16-bit reads of long files, for measurements that see each sample once.
 enum SampleStream {
 
     /// Reads up to `maxSeconds` of the file's first audio track as 16-bit PCM in the

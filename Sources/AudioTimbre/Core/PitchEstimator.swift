@@ -48,13 +48,8 @@ public enum PitchEstimator {
 
     /// Lowest fundamental searched, Hz.
     ///
-    /// The reference implementation stops at 50 Hz and that is too high for the material
-    /// this gets pointed at. Measured on a real trance pack: a sub bassline in C, a synth
-    /// pluck in D and a lead loop all have fundamentals BELOW 50 Hz — C1 is 32.7 Hz and
-    /// D1 is 36.7 — so their correlation curves fall away monotonically across the whole
-    /// searched range with no peak in it at all, and three plainly pitched samples come
-    /// back unpitched. 20 Hz sits under the bottom of a piano (A0, 27.5 Hz) and under any
-    /// sub worth naming.
+    /// Must not be 50 Hz (the reference implementation's floor): sub basses at C1 (32.7 Hz) and
+    /// D1 come back unpitched. 20 Hz sits under a piano's A0 (27.5 Hz) and any sub worth naming.
     public static let minimumHz = 20.0
 
     /// Highest fundamental searched, Hz.
@@ -71,32 +66,26 @@ public enum PitchEstimator {
     /// an artifact rather than a fundamental.
     public static let centroidGateRatio = 1.5
 
-    /// The window searched for a fundamental, in seconds. Taken at the signal's loudest
-    /// point, where periodicity is clearest.
+    /// The long window searched for a fundamental, in seconds, taken at the loudest point.
     ///
-    /// A period can only be measured from a window holding at least two of them, so the
-    /// lowest pitch searched sets the floor on this: 20 Hz needs 100 ms before it can be
-    /// seen at all. 150 ms gives three periods there and stays short enough that the
-    /// window sits inside one note rather than spanning several.
-    ///
-    /// It is the SECOND thing tried, not the first — see ``windowLadder``.
+    /// A window must hold two periods, so 20 Hz needs 100 ms; 150 ms gives three while staying
+    /// inside one note. It is tried SECOND — see ``windowLadder``.
     public static let windowSeconds = 0.15
 
-    /// Window lengths to try, shortest first, in seconds.
+    /// Window lengths to try, shortest first, in seconds; the first that finds a period wins.
     ///
-    /// The shortest window that answers is the best one, and a longer window is only ever
-    /// needed to reach a lower fundamental. Measured: a 150 ms window spans a kick drum's
-    /// pitch glide — the thing that makes it a kick — so no single period fits it and a
-    /// drum that a 50 ms window reads as G#1 comes back unpitched. Going the other way, a
-    /// 50 ms window cannot hold two periods of a 32.7 Hz sub. Neither length is right for
-    /// both, so both are tried and the first that finds a period wins.
+    /// No single length suits both: 150 ms spans a kick's pitch glide so no period fits, while
+    /// 50 ms cannot hold two periods of a 32.7 Hz sub.
     public static let windowLadder = [0.05, windowSeconds]
 
     /// The outcome of an estimate: at most one of `pitch` or `rejection` is set, and
     /// `confidence` is always meaningful.
     public struct Estimate: Hashable, Sendable {
+        /// The estimated fundamental, when one was trusted.
         public let pitch: Pitch?
+        /// The normalised autocorrelation peak, 0…1.
         public let confidence: Double
+        /// Why no pitch was reported, when none was.
         public let rejection: PitchRejection?
     }
 
@@ -184,15 +173,10 @@ public enum PitchEstimator {
                 return i + from
             }
         }
-        // No interior peak at all means no period. Falling back to the tallest lag here
-        // was a real bug, found on real audio and not reachable with synthetic tones: the
-        // tallest lag for aperiodic material is the SHORTEST one searched, because a
-        // correlation decays away from zero lag, so the fallback reported 44,100 / 29 =
-        // 1,520.7 Hz — the exact edge of the search range — with high confidence. It read
-        // as F#6 on an F-minor lead, and on a sub bass and a pluck it produced a figure so
-        // high that the centroid gate threw it out, turning two plainly pitched samples
-        // into "no pitch". An edge of the search window is an artifact of the window, not
-        // a measurement.
+        // No interior peak means no period. Must not fall back to the tallest lag: for
+        // aperiodic material that is the SHORTEST lag searched (correlation decays from zero
+        // lag), so it reports the edge of the search range (~1,520 Hz) with high confidence —
+        // an artifact of the window, not a measurement.
         return nil
     }
 
@@ -225,8 +209,8 @@ public enum PitchEstimator {
         return correlations
     }
 
-    /// The loudest window of the signal, by RMS, at least `minimumLength` samples long —
-    /// or the whole signal when it is shorter than that.
+    /// The loudest window of the signal, by RMS, `length` samples long — or the whole signal
+    /// when it is shorter than that.
     ///
     /// Periodicity is clearest where the sound is strongest; a window taken from a decaying
     /// tail is mostly room and noise.

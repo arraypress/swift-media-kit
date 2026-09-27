@@ -23,7 +23,9 @@ public enum AudioDecoder {
 
     /// Decoded audio: one array per channel, all the same length.
     public struct Decoded: Sendable {
+        /// Deinterleaved samples, one array per channel.
         public let channels: [[Float]]
+        /// Samples per second.
         public let sampleRate: Double
     }
 

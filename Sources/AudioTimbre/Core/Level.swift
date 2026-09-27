@@ -15,6 +15,7 @@
 import AVFoundation
 import Foundation
 
+/// Peak level and clipped-sample count of an audio file, read at its native format.
 public enum Level {
 
     /// Read no further than this.

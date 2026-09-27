@@ -15,6 +15,7 @@
 import AVFoundation
 import Foundation
 
+/// Normalised per-bin peaks of an audio file, for drawing waveform thumbnails and scrubbers.
 public enum Waveform {
 
     /// Bins for a thumbnail; a scrubber asks for more.

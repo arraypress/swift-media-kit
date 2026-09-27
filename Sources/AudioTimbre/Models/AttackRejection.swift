@@ -25,9 +25,8 @@ import Foundation
 public enum AttackRejection: String, Codable, Sendable {
 
     /// The loudest moment is too far into the file to be an onset — it is wherever the
-    /// arrangement peaked, or where a swell was cut off. Measured on a real pad loop: the
-    /// peak sits 54% of the way in, and calling that a three-second attack describes one
-    /// bar being marginally louder than the one before it.
+    /// arrangement peaked, or where a swell was cut off. A pad loop peaking halfway in has
+    /// no three-second attack, just one bar marginally louder than the last.
     ///
     /// A signal that starts at full level and peaks immediately is NOT this: that is an
     /// instant onset, a real attack of about zero.

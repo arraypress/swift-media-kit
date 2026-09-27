@@ -49,13 +49,9 @@ public enum Envelope {
     /// How far into a file an onset may sit and still be called one, as a fraction of the
     /// file's length.
     ///
-    /// A JUDGEMENT with a number, like the bucket boundaries in ``Brightness`` — and like
-    /// those, the raw figure always ships beside the word, so anyone who would draw the
-    /// line elsewhere still has ``Shape/timeToPeakMs``. Measured across eight real
-    /// one-shots and loops from a commercial pack: kick 10%, clap 10%, hat under 1%,
-    /// pluck 7%, snare 3% — all plainly onsets — against a pad loop at 54%, a lead loop
-    /// at 25% and a sub bass swell at 90%, none of which are. The gap between 10% and 25%
-    /// is where this sits.
+    /// A judgement, like ``Brightness``'s boundaries; ``Shape/timeToPeakMs`` always ships beside
+    /// it. Real one-shots peak within 10% (kick, clap, hat, pluck, snare); pads, lead loops and
+    /// swells peak at 25% or later.
     public static let onsetHorizon = 0.25
 
     /// How close to its peak a signal may return, after having decayed away from it,
@@ -172,8 +168,7 @@ public enum Envelope {
         guard levels.first != nil else { return .peaksLate }
 
         // The loudest moment is somewhere in the middle, so it is not an onset — it is
-        // wherever the arrangement peaked, or where a swell happened to be cut off. This
-        // is the pad loop that reported a three-second attack.
+        // wherever the arrangement peaked, or where a swell happened to be cut off.
         guard peakIsAnOnset else { return .peaksLate }
 
         // Struck again: after falling well away from the peak, it comes back near it.

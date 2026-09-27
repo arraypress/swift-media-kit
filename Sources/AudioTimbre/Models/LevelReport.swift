@@ -22,6 +22,7 @@ public struct LevelReport: Equatable, Sendable {
     /// How much of the file was read.
     public let analyzedSeconds: Double
 
+    /// Creates a report from already-measured figures.
     public init(peak: Float, clippedSamples: Int, sampleCount: Int, analyzedSeconds: Double) {
         self.peak = peak; self.clippedSamples = clippedSamples; self.sampleCount = sampleCount; self.analyzedSeconds = analyzedSeconds
     }
