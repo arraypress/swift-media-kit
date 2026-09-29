@@ -117,9 +117,7 @@ public enum PitchEstimator {
     ) -> Estimate {
         let minimumLag = max(1, Int(sampleRate / maximumHz))
         let idealMaximumLag = Int(sampleRate / minimumHz)
-        let window = loudestWindow(
-            samples, sampleRate: sampleRate,
-            length: Int(windowSeconds * sampleRate))
+        let window = loudestWindow(samples, length: Int(windowSeconds * sampleRate))
 
         // Only half a window can ever be a period, so a short file searches a narrower
         // range rather than being refused — the lowest pitch it could detect simply rises.
@@ -218,7 +216,7 @@ public enum PitchEstimator {
     ///
     /// Periodicity is clearest where the sound is strongest; a window taken from a decaying
     /// tail is mostly room and noise.
-    static func loudestWindow(_ samples: [Float], sampleRate: Double, length wanted: Int) -> [Float] {
+    static func loudestWindow(_ samples: [Float], length wanted: Int) -> [Float] {
         let length = min(samples.count, max(1, wanted))
         guard length < samples.count else { return samples }
 
