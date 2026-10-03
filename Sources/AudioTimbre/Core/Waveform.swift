@@ -30,6 +30,16 @@ public enum Waveform {
     /// file is missing, has no audio track, or cannot be read.
     public static func peaks(fileAt url: URL, bins: Int = defaultBins, maxSeconds: Double = maxSeconds) async throws -> [Float] {
         let bins = max(1, bins)
+        // Audio files (WAV, AIFF, CAF, MP3, AAC, FLAC) read straight through AVAudioFile: a few
+        // milliseconds where the asset reader below spends ~50 ms setting up its resampler.
+        // Anything it cannot open (a movie's sound track) takes the asset reader.
+        if let direct = audioFilePeaks(url, bins: bins, maxSeconds: maxSeconds) { return direct }
+        return try await assetReaderPeaks(url, bins: bins, maxSeconds: maxSeconds)
+    }
+
+    /// `peaks(fileAt:)` through the asset reader, resampled to `sampleRate` mono: any file with an
+    /// audio track, movies included.
+    static func assetReaderPeaks(_ url: URL, bins: Int, maxSeconds: Double) async throws -> [Float] {
         var peaks = [Float](repeating: 0, count: bins)
         var index = 0
         var perBin = 1
@@ -49,4 +59,39 @@ public enum Waveform {
         let loudest = peaks.max() ?? 0
         return loudest > 0 ? peaks.map { $0 / loudest } : peaks
     }
+
+    /// `peaks(fileAt:)` through AVAudioFile, read in blocks at the file's own rate (the loudest
+    /// channel per frame); nil when AVAudioFile cannot open the file.
+    static func audioFilePeaks(_ url: URL, bins: Int, maxSeconds: Double) -> [Float]? {
+        guard let file = try? AVAudioFile(forReading: url) else { return nil }
+        let format = file.processingFormat
+        let channels = Int(format.channelCount)
+        let total = min(file.length, AVAudioFramePosition(maxSeconds * format.sampleRate))
+        guard channels > 0, total > 0,
+            let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 65_536)
+        else { return total == 0 ? [Float](repeating: 0, count: bins) : nil }
+        let perBin = max(1, (Int(total) + bins - 1) / bins)
+        var peaks = [Float](repeating: 0, count: bins)
+        var index = 0
+        while index < Int(total) {
+            buffer.frameLength = 0
+            let want = AVAudioFrameCount(min(Int(buffer.frameCapacity), Int(total) - index))
+            guard (try? file.read(into: buffer, frameCount: want)) != nil, buffer.frameLength > 0,
+                let data = buffer.floatChannelData
+            else { break }
+            let count = Int(buffer.frameLength)
+            for c in 0..<channels {
+                let samples = data[c]
+                for i in 0..<count {
+                    let v = abs(samples[i])
+                    let bin = min(bins - 1, (index + i) / perBin)
+                    if v > peaks[bin] { peaks[bin] = v }
+                }
+            }
+            index += count
+        }
+        let loudest = peaks.max() ?? 0
+        return loudest > 0 ? peaks.map { $0 / loudest } : peaks
+    }
 }
+

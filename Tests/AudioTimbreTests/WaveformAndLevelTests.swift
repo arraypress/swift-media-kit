@@ -48,6 +48,15 @@ final class WaveformAndLevelTests: XCTestCase {
         return (0..<n).map { i in Int16(Double(32_000) * (Double(i) / Double(n)) * sin(2 * .pi * 440 * Double(i) / Double(rate))) }
     }
 
+    /// The direct AVAudioFile read (the fast path) draws the same envelope as the asset reader.
+    func testTheDirectReadMatchesTheAssetReader() async throws {
+        let url = try wav("ramp-compare.wav", samples: ramp(seconds: 2))
+        let direct = try XCTUnwrap(Waveform.audioFilePeaks(url, bins: 64, maxSeconds: Waveform.maxSeconds))
+        let reader = try await Waveform.assetReaderPeaks(url, bins: 64, maxSeconds: Waveform.maxSeconds)
+        XCTAssertEqual(direct.count, reader.count)
+        for (a, b) in zip(direct, reader) { XCTAssertEqual(a, b, accuracy: 0.05) }
+    }
+
     func testARampClimbsBinByBinAndASineIsFlat() async throws {
         let rampURL = try wav("ramp.wav", samples: ramp(seconds: 2))
         let peaks = try await Waveform.peaks(fileAt: rampURL)
