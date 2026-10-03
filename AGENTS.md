@@ -2,7 +2,7 @@
 
 Media files, as measured facts: everything macOS knows about a file's metadata, what a sound sounds like, and the colours of an image.
 
-- Modules `MediaMetadata`, `AudioTimbre`, `ImagePalette`, each in `Sources/<Module>` with tests in `Tests/<Module>Tests`; `swift test` is the whole check.
+- Modules `MediaMetadata`, `AudioTimbre`, `ImagePalette`, `FontSpecimen`, each in `Sources/<Module>` with tests in `Tests/<Module>Tests`; `swift test` is the whole check.
 - Swift 6 language mode, tools 6.2, macOS 14+.
 - Part of the Sidewatch package family; every package follows the same layout and PR rules.
 - Each module's user-facing documentation is `Docs/Modules/<Module>.md`; its last audit is `Docs/Audits/<Module>.md` — read it before auditing, and extend it rather than redo it.
@@ -36,3 +36,7 @@ Media files, as measured facts: everything macOS knows about a file's metadata, 
 ## Rules
 
 Read `CONTRIBUTING.md` before changing anything: it is the layout and PR rulebook for this package.
+
+## FontSpecimen — `Sources/FontSpecimen`
+
+- `FontSpecimen(fileAt:)` / `(data:title:)`: the first face CoreText reads from the bytes (never registered) and the specimen's `lines`, each with a `Role`; `font(size:)` gives the face at a size.

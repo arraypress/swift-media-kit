@@ -11,6 +11,7 @@ Each module is its own library product: depend on the package, then only on the 
 | [`MediaMetadata`](Docs/Modules/MediaMetadata.md) | Everything macOS knows about a media file, read once, typed and namespaced. |
 | [`AudioTimbre`](Docs/Modules/AudioTimbre.md) | What a sound sounds like, as measured facts: brightness, texture, pitch, envelope, level. |
 | [`ImagePalette`](Docs/Modules/ImagePalette.md) | The colours of an image, with how much of it each one covers. |
+| [`FontSpecimen`](Docs/Modules/FontSpecimen.md) | A font file's face and the lines of a specimen, with nothing installed. |
 
 ## Requirements
 
@@ -45,6 +46,10 @@ See [Docs/Modules/AudioTimbre.md](Docs/Modules/AudioTimbre.md).
 ### ImagePalette
 
 See [Docs/Modules/ImagePalette.md](Docs/Modules/ImagePalette.md).
+
+### FontSpecimen
+
+See [Docs/Modules/FontSpecimen.md](Docs/Modules/FontSpecimen.md).
 
 Each module's full guide is `Docs/Modules/<Module>.md`.
 
