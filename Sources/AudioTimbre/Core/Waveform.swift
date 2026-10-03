@@ -94,4 +94,3 @@ public enum Waveform {
         return loudest > 0 ? peaks.map { $0 / loudest } : peaks
     }
 }
-
