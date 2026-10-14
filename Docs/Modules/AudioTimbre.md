@@ -143,10 +143,16 @@ sound itself stops, bandwidth for how tightly the energy is gathered.
 `Texture` does **not**. Those boundaries were re-measured, because the inherited pair put 22
 of 25 claps in the same bucket as a kick. Median flatness per class, 30 files each:
 
-| | | | |
-|---|---|---|---|
-| sub bass 0.001 | kick 0.003 | clap 0.071 | ride 0.162 |
-| crash 0.177 | open hat 0.234 | snare 0.380 | closed hat 0.601 |
+| Class | Median flatness |
+|---|---|
+| sub bass | 0.001 |
+| kick | 0.003 |
+| clap | 0.071 |
+| ride | 0.162 |
+| crash | 0.177 |
+| open hat | 0.234 |
+| snare | 0.380 |
+| closed hat | 0.601 |
 
 0.025 and 0.25 sit in the gaps between those clusters. The reason the inherited pair did not
 transfer is that this library measures flatness **per frame and takes the median**, where the

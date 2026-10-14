@@ -66,7 +66,7 @@ present in `raw`.
 
 On this machine — Apple silicon, macOS 27:
 
-| | |
+| Job | Time |
 |---|---|
 | Name, size, dates and type for **107,765 files** (129 GB) | **3.9 s** |
 | The same tree through Spotlight's `MDItem` | **54.8 s** |
