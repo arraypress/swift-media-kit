@@ -15,7 +15,7 @@ Media files, as measured facts: everything macOS knows about a file's metadata, 
 - `Models/` — `FileFacts` (the answer), `FieldValue`, `FieldDescriptor`, `Coordinate`
 - `Errors/` — `MetadataError`
 - `Extensions/` — `URL.metadata()`
-- `Support/` — the readers and helpers: `FileSystemFacts` / `FileSystemRaw`, `ImageFacts` (ImageIO; an SVG's size from its own attributes or viewBox, since ImageIO cannot open one) / `ImageRaw`, `MediaFacts` (AVFoundation) / `MediaRaw`, `DocumentFacts` (PDFKit), `ChecksumFacts`, `DerivedFacts`, `ExtendedAttributes`, `FieldCatalogue`, `Lookup` (codec names), `Format`, `Numbers`, `RawValue`, `ExifDate`, `ISO6709`
+- `Support/` — the readers and helpers: `FileSystemFacts` / `FileSystemRaw`, `ImageFacts` (ImageIO; an SVG's size from its own attributes or viewBox, since ImageIO cannot open one) / `ImageRaw`, `MediaFacts` (AVFoundation) / `MediaRaw`, `DocumentFacts` (PDFKit), `ChecksumFacts`, `DerivedFacts`, `ExtendedAttributes`, `FieldCatalogue`, `Lookup` (codec names), `Format`, `Numbers`, `RawValue`, `ExifDate`, `ISO6709`; `Format.clock` (`1:42`, `1:02:03`, a dash for nonsense — a player's clock, beside `Format.duration`'s file-name form)
 
 ## AudioTimbre — `Sources/AudioTimbre`
 

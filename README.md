@@ -53,6 +53,12 @@ See [Docs/Modules/FontSpecimen.md](Docs/Modules/FontSpecimen.md).
 
 Each module's full guide is `Docs/Modules/<Module>.md`.
 
+```swift
+// A player's clock.
+Format.clock(102.4)   // "1:42"
+Format.clock(3723)    // "1:02:03"
+```
+
 ## Notes
 
 The modules were separate packages until 27 September 2026 (`swift-media-metadata`, `swift-audio-timbre`, `swift-image-palette`); their commits are kept here, so `git log --follow` traces any file back through them.

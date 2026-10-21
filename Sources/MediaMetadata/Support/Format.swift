@@ -79,6 +79,15 @@ public enum Format {
         return "\(secs)s"
     }
 
+    /// `1:42`, `1:02:03` — a player's clock, rounded to the second; `–:––` for a value that is not a
+    /// duration (negative, NaN, infinite), never a number that is not one.
+    public static func clock(_ seconds: Double) -> String {
+        guard seconds.isFinite, seconds >= 0 else { return "–:––" }
+        let total = Int(seconds.rounded())
+        if total >= 3600 { return String(format: "%d:%02d:%02d", total / 3600, (total / 60) % 60, total % 60) }
+        return String(format: "%d:%02d", total / 60, total % 60)
+    }
+
     /// Drops a trailing `.0`.
     static func trimmed(_ value: Double) -> String {
         value == value.rounded()
