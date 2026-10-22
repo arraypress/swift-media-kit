@@ -135,6 +135,15 @@ final class ImageComparisonTests: XCTestCase {
         XCTAssertEqual(d.changedBounds, CGRect(x: 20, y: 10, width: 20, height: 10))
     }
 
+    func testPictureFilesAreKnownByTheirExtension() {
+        for ext in ["png", "PNG", "jpg", "jpeg", "gif", "webp", "heic", "tiff", "bmp", "ico", "icns", "svg"] {
+            XCTAssertTrue(ImageComparison.handles(fileExtension: ext), ext)
+        }
+        for ext in ["pdf", "swift", "json", "mp4", "", "nosuchtype"] {
+            XCTAssertFalse(ImageComparison.handles(fileExtension: ext), ext)
+        }
+    }
+
     func testPicturesOverTheLimitAreNotCompared() {
         XCTAssertNil(ImageComparison.difference(picture(10, 10), picture(10, 10), limit: 99))
         XCTAssertNotNil(ImageComparison.difference(picture(10, 10), picture(10, 10), limit: 100))

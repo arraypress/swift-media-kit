@@ -10,12 +10,21 @@
 
 import CoreGraphics
 import Foundation
+import UniformTypeIdentifiers
 
 /// Two versions of an image — a file before and after a change — decoded and compared: each
 /// side's facts (size, bytes, type, frames) and, when both are one size, which pixels differ.
 public enum ImageComparison {
     /// The largest picture compared pixel by pixel (a 40-megapixel pair is ~320 MB of buffers).
     public static let pixelLimit = 40_000_000
+
+    /// Whether a file with this extension is a picture to compare: any type that conforms to
+    /// `public.image` (PNG, JPEG, GIF, WebP, HEIC, TIFF, BMP, ICO, ICNS, SVG …), except PDF, which
+    /// is a document. Case is ignored; an unknown extension is not.
+    public static func handles(fileExtension: String) -> Bool {
+        guard let type = UTType(filenameExtension: fileExtension.lowercased()) else { return false }
+        return type.conforms(to: .image) && !type.conforms(to: .pdf)
+    }
 
     /// `old` and `new` compared. Either may be nil (an added or deleted file); a side no
     /// decoder reads is nil too. Blocks while decoding and comparing: call it off the main thread.
