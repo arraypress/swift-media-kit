@@ -2,7 +2,7 @@
 
 Media files, as measured facts: everything macOS knows about a file's metadata, what a sound sounds like, and the colours of an image.
 
-- Modules `MediaMetadata`, `AudioTimbre`, `ImagePalette`, `FontSpecimen`, each in `Sources/<Module>` with tests in `Tests/<Module>Tests`; `swift test` is the whole check.
+- Modules `MediaMetadata`, `AudioTimbre`, `ImagePalette`, `FontSpecimen`, `ImageCompare`, each in `Sources/<Module>` with tests in `Tests/<Module>Tests`; `swift test` is the whole check.
 - Swift 6 language mode, tools 6.2, macOS 14+.
 - Part of the Sidewatch package family; every package follows the same layout and PR rules.
 - Each module's user-facing documentation is `Docs/Modules/<Module>.md`; its last audit is `Docs/Audits/<Module>.md` — read it before auditing, and extend it rather than redo it.
@@ -32,6 +32,14 @@ Media files, as measured facts: everything macOS knows about a file's metadata, 
 - `Core/` — `PaletteExtractor` (`extract(from:options:)` over a URL, a `CGImage` or OKLab samples; `PaletteOptions`), `ImageSampling` (load, draw down, un-premultiply, drop clear pixels)
 - `Models/` — `Swatch` (sRGB bytes, share, OKLab lightness / chroma / hue, `hex` / `rgb` / `hsl`), `OKLab`
 - `Support/` — `ColorFormats` (the string forms), `SplitMix` (the seeded generator)
+
+## ImageCompare — `Sources/ImageCompare`
+
+### Module map
+- `Core/` — `ImageComparison` (`compare(old:new:)` over file bytes; `difference(_:_:limit:)` over two `CGImage`s, both drawn into 8-bit premultiplied sRGB and compared a 32-bit word a pixel)
+- `Models/` — `ComparedImage` (picture, size, vector or not, bytes, type, frames), `PixelDifference` (count, total, changed bounds from the top-left, grayscale mask), `ImageComparisonResult`
+- `Extensions/` — `PixelDifference.changedFraction`, `ImageComparisonResult.sizesDiffer`
+- `Support/` — `ImageDecoding` (ImageIO, first frame; SVG through `NSImage` at 2 pixels a point, where AppKit is present), `PixelBuffer` (the top row first: a bitmap context keeps it first in memory, so the picture is drawn UNflipped — a flip mirrored every position and the tests caught it)
 
 ## Rules
 

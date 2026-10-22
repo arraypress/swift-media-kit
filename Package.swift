@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "AudioTimbre", targets: ["AudioTimbre"]),
         .library(name: "ImagePalette", targets: ["ImagePalette"]),
         .library(name: "FontSpecimen", targets: ["FontSpecimen"]),
+        .library(name: "ImageCompare", targets: ["ImageCompare"]),
     ],
     dependencies: [
         .package(url: "https://github.com/arraypress/swift-codec-kit.git", from: "0.1.0")
@@ -23,10 +24,12 @@ let package = Package(
         .target(name: "AudioTimbre", resources: [.process("Localizable.xcstrings")], swiftSettings: [.swiftLanguageMode(.v6)]),
         .target(name: "ImagePalette", resources: [.process("Localizable.xcstrings")], swiftSettings: [.swiftLanguageMode(.v6)]),
         .target(name: "FontSpecimen", swiftSettings: [.swiftLanguageMode(.v6)]),
+        .target(name: "ImageCompare", swiftSettings: [.swiftLanguageMode(.v6)]),
         .testTarget(name: "MediaMetadataTests", dependencies: ["MediaMetadata"]),
         .testTarget(name: "AudioTimbreTests", dependencies: ["AudioTimbre"]),
         .testTarget(name: "ImagePaletteTests", dependencies: ["ImagePalette"]),
         .testTarget(name: "FontSpecimenTests", dependencies: ["FontSpecimen"]),
+        .testTarget(name: "ImageCompareTests", dependencies: ["ImageCompare"]),
     ]
 )
 

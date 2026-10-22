@@ -12,6 +12,7 @@ Each module is its own library product: depend on the package, then only on the 
 | [`AudioTimbre`](Docs/Modules/AudioTimbre.md) | What a sound sounds like, as measured facts: brightness, texture, pitch, envelope, level. |
 | [`ImagePalette`](Docs/Modules/ImagePalette.md) | The colours of an image, with how much of it each one covers. |
 | [`FontSpecimen`](Docs/Modules/FontSpecimen.md) | A font file's face and the lines of a specimen, with nothing installed. |
+| [`ImageCompare`](Docs/Modules/ImageCompare.md) | Two versions of an image: their facts, and which pixels changed. |
 
 ## Requirements
 
@@ -50,6 +51,10 @@ See [Docs/Modules/ImagePalette.md](Docs/Modules/ImagePalette.md).
 ### FontSpecimen
 
 See [Docs/Modules/FontSpecimen.md](Docs/Modules/FontSpecimen.md).
+
+### ImageCompare
+
+See [Docs/Modules/ImageCompare.md](Docs/Modules/ImageCompare.md).
 
 Each module's full guide is `Docs/Modules/<Module>.md`.
 
