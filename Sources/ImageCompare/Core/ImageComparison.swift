@@ -19,11 +19,10 @@ public enum ImageComparison {
     public static let pixelLimit = 40_000_000
 
     /// Whether a file with this extension is a picture to compare: any type that conforms to
-    /// `public.image` (PNG, JPEG, GIF, WebP, HEIC, TIFF, BMP, ICO, ICNS, SVG …), except PDF, which
-    /// is a document. Case is ignored; an unknown extension is not.
+    /// `public.image` (PNG, JPEG, GIF, WebP, HEIC, TIFF, BMP, ICO, ICNS, SVG …). PDF does not (it
+    /// is a document), and UTType ignores the extension's case; an unknown extension is no picture.
     public static func handles(fileExtension: String) -> Bool {
-        guard let type = UTType(filenameExtension: fileExtension.lowercased()) else { return false }
-        return type.conforms(to: .image) && !type.conforms(to: .pdf)
+        UTType(filenameExtension: fileExtension)?.conforms(to: .image) ?? false
     }
 
     /// `old` and `new` compared. Either may be nil (an added or deleted file); a side no
