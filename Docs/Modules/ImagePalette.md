@@ -16,14 +16,14 @@ for swatch in palette {
 
 ## Features
 
-- 📊 **Shares, not just colours** — every swatch carries the fraction of the picture nearest it; a palette's shares sum to 1
-- 👁️ **Clustered in OKLab** — k-means in a perceptual space, so "different" means different to the eye: a navy and a black separate, two greens the eye cannot tell apart merge
-- 🎯 **Deterministic** — k-means++ seeded from a fixed generator; the same picture gives the same palette on every run and every machine
-- 🧹 **Merges and drops** — colours within a just-noticeable distance become one; slivers under 1 % hand their pixels to the nearest survivor
-- 🫥 **Transparency respected** — clear pixels are not colours; semi-transparent ones are un-premultiplied first
-- 🖼️ **Any image ImageIO reads** — PNG, JPEG, HEIC, TIFF, GIF, WebP, RAW, a PDF's first page — drawn down to 256 px on the long side before sampling, so a 50-megapixel photo takes the same few milliseconds as a thumbnail
-- 🎨 **Every swatch in four forms** — `#RRGGBB`, `rgb()`, `hsl()`, and OKLab lightness / chroma / hue, with `isNeutral`
-- 📦 **Zero dependencies** — CoreGraphics and ImageIO; no UI framework, every Apple platform, headless
+- **Shares, not just colours** — every swatch carries the fraction of the picture nearest it; a palette's shares sum to 1
+- **Clustered in OKLab** — k-means in a perceptual space, so "different" means different to the eye: a navy and a black separate, two greens the eye cannot tell apart merge
+- **Deterministic** — k-means++ seeded from a fixed generator; the same picture gives the same palette on every run and every machine
+- **Merges and drops** — colours within a just-noticeable distance become one; slivers under 1 % hand their pixels to the nearest survivor
+- **Transparency respected** — clear pixels are not colours; semi-transparent ones are un-premultiplied first
+- **Any image ImageIO reads** — PNG, JPEG, HEIC, TIFF, GIF, WebP, RAW, a PDF's first page — drawn down to 256 px on the long side before sampling, so a 50-megapixel photo takes the same few milliseconds as a thumbnail
+- **Every swatch in four forms** — `#RRGGBB`, `rgb()`, `hsl()`, and OKLab lightness / chroma / hue, with `isNeutral`
+- **Zero dependencies** — CoreGraphics and ImageIO; no UI framework, every Apple platform, headless
 
 ## Measured
 
